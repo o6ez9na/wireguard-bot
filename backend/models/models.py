@@ -3,7 +3,9 @@ from sqlalchemy.orm import Mapped
 from .base import Base
 
 
-class Client(Base):
+class User(Base):
+    __abstract__ = True
+
     name: Mapped[str]
     password: Mapped[str]
     description: Mapped[str]
@@ -11,3 +13,11 @@ class Client(Base):
     public_key: Mapped[str]
     private_key: Mapped[str]
     config: Mapped[str]
+
+
+class Client(User):
+    pass
+
+
+class Admin(User):
+    pass
