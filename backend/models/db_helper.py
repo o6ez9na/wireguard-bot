@@ -24,10 +24,10 @@ class DBHelper:
         )
         return session
 
-    async def session_dependency(self) -> AsyncSession:
-        async with self.get_scoped_session() as session:
+    async def session_dependency(self):
+        async with self.session_factory() as session:
             yield session
-            await session.remove()
+            await session.close()
 
 
 db_helper = DBHelper(

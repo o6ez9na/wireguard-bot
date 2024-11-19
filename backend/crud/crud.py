@@ -1,7 +1,8 @@
-from schemas.schemas import UserCreate, User
+from schemas.schemas import UserCreate
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.engine import Result
 from sqlalchemy import select
+from models.models import User
 
 
 async def create_user(session: AsyncSession, user_in: UserCreate) -> dict:
@@ -12,7 +13,7 @@ async def create_user(session: AsyncSession, user_in: UserCreate) -> dict:
     return user
 
 
-async def get_user(session: AsyncSession) -> list[User]:
+async def get_users(session: AsyncSession) -> list[User]:
     query = select(User).order_by(User.id)
     result: Result = await session.execute(query)
     users = result.scalars().all()

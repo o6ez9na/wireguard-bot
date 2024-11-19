@@ -9,14 +9,14 @@ router = APIRouter(prefix='/api/v1/user', tags=["Users"])
 
 
 @router.get("/", response_model=list[User])
-async def get_user(
+async def get_users(
     session: AsyncSession = Depends(db_helper.session_dependency),
 ):
-    return await crud.get_user(session=session)
+    return await crud.get_users(session=session)
 
 
 @router.get("/{user_id}/", response_model=User)
-async def get_users(
+async def get_user(
         user_id: int,
         session: AsyncSession = Depends(db_helper.session_dependency),
 ):
