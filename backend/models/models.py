@@ -3,7 +3,7 @@ from sqlalchemy.orm import Mapped
 from .base import Base
 
 
-class User(Base):
+class UserBase(Base):
     __abstract__ = True
 
     name: Mapped[str]
@@ -15,9 +15,9 @@ class User(Base):
     config: Mapped[str]
 
 
-class Client(User):
+class Client(UserBase):
     pass
 
 
-class Admin(User):
+class Admin(UserBase):
     pass
