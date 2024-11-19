@@ -5,6 +5,6 @@ __all__ = {
     "db_helper"
 }
 
-from .models import User
+from .models import Client
 from .base import Base
 from .db_helper import DBHelper, db_helper

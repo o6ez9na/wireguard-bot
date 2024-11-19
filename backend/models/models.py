@@ -3,7 +3,7 @@ from sqlalchemy.orm import Mapped
 from .base import Base
 
 
-class User(Base):
+class Client(Base):
     name: Mapped[str]
     password: Mapped[str]
     description: Mapped[str]

@@ -1,68 +1,68 @@
-from schemas.schemas import User, UserCreate, UserUpdate
+from schemas.schemas import Client, ClientCreate, ClientUpdate
 from fastapi import APIRouter, HTTPException, status, Depends
 from crud import crud
 from models.db_helper import db_helper
-from dependencies.dependencies import user_by_id
+from dependencies.dependencies import client_by_id
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-router = APIRouter(prefix='/api/v1/user', tags=["Users"])
+router = APIRouter(prefix='/api/v1/client', tags=["Clients"])
 
 
-@router.get("/", response_model=list[User])
-async def get_users(
+@router.get("/", response_model=list[Client])
+async def get_clients(
     session: AsyncSession = Depends(db_helper.session_dependency),
 ):
-    return await crud.get_users(session=session)
+    return await crud.get_clients(session=session)
 
 
-@router.get("/{user_id}/", response_model=User)
-async def get_user(
-    user: User = Depends(user_by_id)
+@router.get("/{client_id}/", response_model=Client)
+async def get_client(
+    client: Client = Depends(client_by_id)
 ):
-    return user
+    return client
 
 
 @router.post(
     "/create/",
-    response_model=User,
+    response_model=Client,
     status_code=status.HTTP_201_CREATED
 )
-async def create_user(
-        user: UserCreate,
+async def create_client(
+        client: ClientCreate,
         session: AsyncSession = Depends(db_helper.session_dependency),
 ):
-    return await crud.create_user(session=session, user_in=user)
+    return await crud.create_client(session=session, client_in=client)
 
 
-@router.put("/{user_id}/")
-async def update_user(
-    user_update: UserUpdate,
-    user: User = Depends(user_by_id),
+@router.put("/{client_id}/")
+async def update_client(
+    client_update: ClientUpdate,
+    client: Client = Depends(client_by_id),
     session: AsyncSession = Depends(db_helper.session_dependency),
 ):
-    return await crud.update_user(
+    return await crud.update_client(
         session=session,
-        user=user,
-        user_update=user_update)
+        client=client,
+        client_update=client_update)
 
 
-@router.patch("/{user_id}/")
-async def update_user_partial(
-    user_update: UserUpdate,
-    user: User = Depends(user_by_id),
+@router.patch("/{client_id}/")
+async def update_client_partial(
+    client_update: ClientUpdate,
+    client: Client = Depends(client_by_id),
     session: AsyncSession = Depends(db_helper.session_dependency),
 ):
-    return await crud.update_user(
+    return await crud.update_client(
         session=session,
-        user=user,
-        user_update=user_update,
+        client=client,
+        client_update=client_update,
         partial=True)
 
 
-@router.delete("/{user_id}/", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_user(
-    user: User = Depends(user_by_id),
+@router.delete("/{client_id}/", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_client(
+    client: Client = Depends(client_by_id),
     session: AsyncSession = Depends(db_helper.session_dependency),
 ) -> None:
-    return await crud.delete_user(session=session, user=user)
+    return await crud.delete_client(session=session, client=client)

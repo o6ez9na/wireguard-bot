@@ -3,7 +3,7 @@ from typing import Annotated
 from annotated_types import MinLen, MaxLen
 
 
-class UserBase(BaseModel):
+class ClientBase(BaseModel):
     name: Annotated[str, MinLen(3), MaxLen(20)]
     telegram_id: str
     password: Annotated[str, MinLen(8)]
@@ -13,15 +13,15 @@ class UserBase(BaseModel):
     description: str
 
 
-class UserCreate(UserBase):
+class ClientCreate(ClientBase):
     pass
 
 
-class UserUpdate(UserCreate):
+class ClientUpdate(ClientCreate):
     pass
 
 
-class UserUpdateParital(UserCreate):
+class ClientUpdateParital(ClientCreate):
     name: Annotated[str, MinLen(3), MaxLen(20)] | None = None
     telegram_id: str | None = None
     password: Annotated[str, MinLen(8)] | None = None
@@ -31,7 +31,7 @@ class UserUpdateParital(UserCreate):
     description: str | None = None
 
 
-class User(UserCreate):
+class Client(ClientCreate):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
