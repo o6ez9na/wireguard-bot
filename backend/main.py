@@ -11,7 +11,7 @@ async def lifespan(app: FastAPI):
         await conn.run_sync(Base.metadata.create_all)
     yield
 
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 app.include_router(user_router)
 
 
