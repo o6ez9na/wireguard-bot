@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).parent.parent
 class Settings(BaseSettings):
     user: str = "postgres"
     password: str = "postgres"
-    host: str = "185.65.202.185"
+    host: str = "192.168.1.248"
     port: str = "5432"
     db_name: str = "wireguard"
 
