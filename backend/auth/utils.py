@@ -19,9 +19,7 @@ def encode_jwt(
     else:
         expire = now + timedelta(minutes=expire)
     to_encode.update(exp=expire, iat=now)
-    print(to_encode)
     encoded = jwt.encode(to_encode, private_key, algorithm=algorithm)
-    print(encoded)
     return encoded
 
 
