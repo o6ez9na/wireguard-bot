@@ -3,4 +3,6 @@ backend/auth/keys/*
 backend/alembic/versions/__pycache__
 backend/__pycache__
 backend/*/__pycache__
-backend/schemas/__pycache__
+backend/schemas/__pycache__/*
+backend/schemas/__pycache__/__init__.cpython-312.pyc
+backend/schemas/__pycache__/schemas.cpython-312.pyc
