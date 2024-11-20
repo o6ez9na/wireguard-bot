@@ -1,8 +1,8 @@
 from auth.helpers import create_access_token, create_refresh_token, validate_admin
 from auth.dependencies import http_bearer, get_current_auth_admin, get_current_auth_user_for_refresh
 from fastapi import APIRouter, Depends
-from schemas.schemas import TokenInfo, Admin
-
+from schemas.schemas import TokenInfo
+from models.models import Admin
 
 router = APIRouter(dependencies=[Depends(http_bearer)])
 
@@ -10,6 +10,7 @@ router = APIRouter(dependencies=[Depends(http_bearer)])
 @ router.post('/login/', response_model=TokenInfo)
 def auth_admin_issue_jwt(
     admin: Admin = Depends(validate_admin)
+
 ):
     access_token = create_access_token(admin)
     refresh_token = create_refresh_token(admin)

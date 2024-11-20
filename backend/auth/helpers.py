@@ -1,4 +1,7 @@
-from schemas.schemas import Admin
+from sqlalchemy import select
+from models.db_helper import db_helper
+from sqlalchemy.ext.asyncio import AsyncSession
+from models.models import Admin
 from auth import utils
 from core.config import settings
 from datetime import timedelta
@@ -93,16 +96,25 @@ def create_refresh_token(admin: Admin) -> str:
     )
 
 
-def validate_admin(
+async def get_admin_by_username(username: str, session: AsyncSession) -> Admin:
+    query = select(Admin).where(Admin.username == username)
+    result = await session.execute(query)
+    admin = result.scalar_one_or_none()
+
+    return admin
+
+
+async def validate_admin(
     username: str = Form(),
     password: str = Form(),
+    session: AsyncSession = Depends(db_helper.session_dependency),
 ):
     unauthed_exceptions = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="invalid name or password",
     )
 
-    if not (admin := admins_db.get(username)):
+    if not (admin := await get_admin_by_username(username, session=session)):
         raise unauthed_exceptions
 
     if utils.validate_password(
