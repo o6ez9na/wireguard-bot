@@ -18,7 +18,7 @@ def encode_jwt(
         expire = now + expire_timedelta
     else:
         expire = now + timedelta(minutes=expire)
-    to_encode.update(exp=expire, iat=now, password=str(payload['password']))
+    to_encode.update(exp=expire, iat=now)
     print(to_encode)
     encoded = jwt.encode(to_encode, private_key, algorithm=algorithm)
     print(encoded)
