@@ -3,78 +3,57 @@ from typing import Annotated
 from annotated_types import MinLen, MaxLen
 
 
-class UserBase(BaseModel):
+class ClientBase(BaseModel):
+    name: Annotated[str, MinLen(3), MaxLen(20)]
+    telegram_id: str
+    public_key: str
+    private_key: str
+    config: str
+    description: str
+    is_active: bool = False
+
+
+class ClientCreate(ClientBase):
+    pass
+
+
+class ClientUpdate(ClientCreate):
+    pass
+
+
+class ClientUpdatePartial(ClientCreate):
+    pass
+
+
+class Client(ClientCreate):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+######################################################
+
+
+class AdminBase(BaseModel):
     name: Annotated[str, MinLen(3), MaxLen(20)]
     telegram_id: str
     password: Annotated[str, MinLen(8)]
     public_key: str
     private_key: str
     config: str
-    description: str
 
 
-class UserCreate(UserBase):
+class AdminCreate(AdminBase):
     pass
 
 
-class UserUpdate(UserCreate):
+class AdminUpdate(AdminCreate):
     pass
 
 
-class UserUpdatePartial(UserCreate):
-    name: Annotated[str, MinLen(3), MaxLen(20)] | None = None
-    telegram_id: str | None = None
-    password: Annotated[str, MinLen(8)] | None = None
-    public_key: str | None = None
-    private_key: str | None = None
-    config: str | None = None
-    description: str | None = None
+class AdminUpdatePartial(AdminCreate):
+    pass
 
 
-class User(UserCreate):
+class Admin(AdminCreate):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
-
-######################################################
-
-
-class ClientBase(UserBase):
-    pass
-
-
-class ClientCreate(UserBase):
-    pass
-
-
-class ClientUpdate(UserCreate):
-    pass
-
-
-class ClientUpdatePartial(UserCreate):
-    pass
-######################################################
-
-
-class Client(User):
-    pass
-
-
-class AdminBase(UserBase):
-    pass
-
-
-class AdminCreate(UserBase):
-    pass
-
-
-class AdminUpdate(UserCreate):
-    pass
-
-
-class AdminUpdatePartial(UserCreate):
-    pass
-
-
-class Admin(User):
-    pass
