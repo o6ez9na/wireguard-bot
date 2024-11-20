@@ -1,6 +1,12 @@
 from pydantic import BaseModel, ConfigDict
 from typing import Annotated
 from annotated_types import MinLen, MaxLen
+from pathlib import Path
+
+
+class TokenInfo(BaseModel):
+    access_token: str
+    token_type: str
 
 
 class ClientBase(BaseModel):
@@ -35,7 +41,7 @@ class Client(ClientCreate):
 class AdminBase(BaseModel):
     name: Annotated[str, MinLen(3), MaxLen(20)]
     telegram_id: str
-    password: Annotated[str, MinLen(8)]
+    password: bytes
     public_key: str
     private_key: str
     config: str

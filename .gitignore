@@ -1,1 +1,5 @@
 .venv
+backend/auth/keys/*
+backend/*/__pycache__
+backend/alembic/versions/__pycache__
+backend/__pycache__
