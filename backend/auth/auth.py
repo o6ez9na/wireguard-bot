@@ -74,7 +74,6 @@ def get_curent_token_payload(
     token: str = Depends(oauth2_scheme)
 ) -> AdminBase:
     try:
-        print(token)
         payload = utils.decode_jwt(token=token)
     except InvalidTokenError as e:
         raise HTTPException(
