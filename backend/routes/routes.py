@@ -1,12 +1,13 @@
-from schemas.schemas import Client, ClientCreate, ClientUpdate
+from schemas.schemas import Client, ClientCreate, ClientUpdate, Admin, AdminCreate, AdminUpdate
 from fastapi import APIRouter, HTTPException, status, Depends
 from crud import crud
 from models.db_helper import db_helper
-from dependencies.dependencies import client_by_id
+from dependencies.dependencies import client_by_id, admin_by_id
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
 router = APIRouter(prefix='/api/v1/client', tags=["Clients"])
+admin_router = APIRouter(prefix='/api/v1/admin', tags=["Admin"])
 
 
 @router.get("/", response_model=list[Client])
@@ -66,3 +67,61 @@ async def delete_client(
     session: AsyncSession = Depends(db_helper.session_dependency),
 ) -> None:
     return await crud.delete_client(session=session, client=client)
+
+
+@admin_router.get("/", response_model=list[Admin])
+async def get_admins(
+    session: AsyncSession = Depends(db_helper.session_dependency),
+):
+    return await crud.get_admins(session=session)
+
+
+@admin_router.get("/{admin_id}/", response_model=Admin)
+async def get_admin(
+    admin: Admin = Depends(admin_by_id)
+):
+    return admin
+
+
+@admin_router.post("/create/",
+                   response_model=Admin,
+                   status_code=status.HTTP_201_CREATED)
+async def create_admin(
+    admin: AdminCreate,
+    session: AsyncSession = Depends(db_helper.session_dependency),
+):
+    return await crud.create_admin(session=session, admin_in=admin)
+
+
+@admin_router.put("/{admin_id}/")
+async def update_admin(
+        admin_update: AdminUpdate,
+        admin: Admin = Depends(admin_by_id),
+        session: AsyncSession = Depends(db_helper.session_dependency)):
+
+    return await crud.update_admin(
+        session=session,
+        admin=admin,
+        admin_update=admin_update
+    )
+
+
+@admin_router.patch("/{admin_id}/")
+async def update_admin_partial(
+        admin_update: AdminUpdate,
+        admin: Admin = Depends(admin_by_id),
+        session: AsyncSession = Depends(db_helper.session_dependency)):
+
+    return await crud.update_admin(
+        session=session,
+        admin=admin,
+        admin_update=admin_update
+    )
+
+
+@admin_router.delete("/{admin_id}/", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_admin(
+    admin: Admin = Depends(admin_by_id),
+    session: AsyncSession = Depends(db_helper.session_dependency),
+):
+    return await crud.delete_admin(session=session, admin=admin)

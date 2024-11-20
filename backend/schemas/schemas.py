@@ -37,6 +37,8 @@ class User(UserCreate):
     id: int
 
 ######################################################
+
+
 class ClientBase(UserBase):
     pass
 
@@ -50,23 +52,29 @@ class ClientUpdate(UserCreate):
 
 
 class ClientUpdatePartial(UserCreate):
-   pass
+    pass
 ######################################################
 
-class Client(UserCreate):
+
+class Client(User):
     pass
+
 
 class AdminBase(UserBase):
     pass
 
+
 class AdminCreate(UserBase):
     pass
+
 
 class AdminUpdate(UserCreate):
     pass
 
+
 class AdminUpdatePartial(UserCreate):
     pass
 
-class Admin(UserCreate):
+
+class Admin(User):
     pass
