@@ -1,15 +1,10 @@
-from auth.helpers import ACCESS_TOKEN_TYPE, REFRESH_TOKEN_TYPE, create_access_token, create_refresh_token, validate_admin
-from auth.dependencies import get_auth_admin_from_token_of_type, http_bearer
+from auth.helpers import create_access_token, create_refresh_token, validate_admin
+from auth.dependencies import http_bearer, get_current_auth_admin, get_current_auth_user_for_refresh
 from fastapi import APIRouter, Depends
 from schemas.schemas import TokenInfo, Admin
 
 
 router = APIRouter(dependencies=[Depends(http_bearer)])
-
-
-get_current_auth_admin = get_auth_admin_from_token_of_type(ACCESS_TOKEN_TYPE)
-get_current_auth_user_for_refresh = get_auth_admin_from_token_of_type(
-    REFRESH_TOKEN_TYPE)
 
 
 @ router.post('/login/', response_model=TokenInfo)
