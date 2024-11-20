@@ -18,9 +18,10 @@ def encode_jwt(
         expire = now + expire_timedelta
     else:
         expire = now + timedelta(minutes=expire)
-
-    to_encode.update(exp=expire, iat=now)
+    to_encode.update(exp=expire, iat=now, password=str(payload['password']))
+    print(to_encode)
     encoded = jwt.encode(to_encode, private_key, algorithm=algorithm)
+    print(encoded)
     return encoded
 
 
@@ -43,4 +44,4 @@ def hash_password(
 
 
 def validate_password(password: str, hashed_password: bytes) -> bool:
-    return bcrypt.checkpw(password.encode(), hashed_password)
+    return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))

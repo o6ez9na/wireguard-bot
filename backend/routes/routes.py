@@ -4,10 +4,12 @@ from crud import crud
 from models.db_helper import db_helper
 from dependencies.dependencies import client_by_id, admin_by_id
 from sqlalchemy.ext.asyncio import AsyncSession
+from auth.auth import router as login_router
 
 
 router = APIRouter(prefix='/api/v1/client', tags=["Clients"])
 admin_router = APIRouter(prefix='/api/v1/admin', tags=["Admin"])
+admin_router.include_router(login_router)
 
 
 @router.get("/", response_model=list[Client])

@@ -2,7 +2,8 @@ from schemas.schemas import TokenInfo, AdminBase
 import auth.utils as utils
 from fastapi import APIRouter, Depends, Form, HTTPException, status
 
-router = APIRouter(prefix='/auth', tags=["Auth"])
+router = APIRouter()
+
 john = AdminBase(
     name='john',
     telegram_id='1234',
@@ -58,7 +59,7 @@ def auth_admin_issue_jwt(
         "password": admin.password
     }
 
-    token = utils.encode_jwt(jwt_payload)
+    token = utils.encode_jwt(payload=jwt_payload)
     return TokenInfo(
         access_token=token,
         token_type="Bearer"

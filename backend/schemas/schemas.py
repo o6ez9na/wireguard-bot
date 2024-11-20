@@ -41,7 +41,7 @@ class Client(ClientCreate):
 class AdminBase(BaseModel):
     name: Annotated[str, MinLen(3), MaxLen(20)]
     telegram_id: str
-    password: bytes
+    password: str
     public_key: str
     private_key: str
     config: str
@@ -60,6 +60,6 @@ class AdminUpdatePartial(AdminCreate):
 
 
 class Admin(AdminCreate):
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(from_attributes=True, strict=True)
 
     id: int
