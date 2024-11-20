@@ -1,4 +1,4 @@
-from schemas.schemas import AdminBase
+from schemas.schemas import Admin
 from auth import utils
 from core.config import settings
 from datetime import timedelta

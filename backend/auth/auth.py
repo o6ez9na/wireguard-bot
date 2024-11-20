@@ -2,7 +2,7 @@ from auth.helpers import TOKEN_TYPE_FIELD, ACCESS_TOKEN_TYPE, REFRESH_TOKEN_TYPE
 from jwt.exceptions import InvalidTokenError
 from fastapi.security import HTTPBearer, OAuth2PasswordBearer
 from fastapi import APIRouter, Depends, Form, HTTPException, status
-from schemas.schemas import TokenInfo, AdminBase
+from schemas.schemas import TokenInfo, Admin
 import auth.utils as utils
 from core.config import settings
 from datetime import timedelta
@@ -12,7 +12,8 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/admin/login/")
 
 router = APIRouter(dependencies=[Depends(http_bearer)])
 
-john = AdminBase(
+john = Admin(
+    id=1,
     username='john',
     telegram_id='1234',
     password=utils.hash_password("qwerty"),
@@ -21,7 +22,8 @@ john = AdminBase(
     config='config',
 )
 
-sam = AdminBase(
+sam = Admin(
+    id=2,
     username='sam',
     telegram_id='12334',
     password=utils.hash_password("qwerty"),
@@ -30,7 +32,7 @@ sam = AdminBase(
     config='config',
 )
 
-admins_db: dict[str, AdminBase] = {
+admins_db: dict[str, Admin] = {
     john.username: john,
     sam.username: sam,
 }
@@ -38,7 +40,7 @@ admins_db: dict[str, AdminBase] = {
 
 def get_curent_token_payload(
     token: str = Depends(oauth2_scheme)
-) -> AdminBase:
+) -> Admin:
     try:
         payload = utils.decode_jwt(token=token)
     except InvalidTokenError as e:
@@ -85,7 +87,7 @@ def create_jwt(
                             )
 
 
-def create_access_token(admin: AdminBase) -> str:
+def create_access_token(admin: Admin) -> str:
     jwt_payload = {
         "sub": admin.username,
         "name": admin.username,
@@ -98,7 +100,7 @@ def create_access_token(admin: AdminBase) -> str:
     )
 
 
-def create_refresh_token(admin: AdminBase) -> str:
+def create_refresh_token(admin: Admin) -> str:
     jwt_payload = {
         "sub": admin.username,
         "name": admin.username,
@@ -134,7 +136,7 @@ def validate_admin(
 
 def get_current_token_payload(
     token: str = Depends(oauth2_scheme)
-) -> AdminBase:
+) -> Admin:
     try:
         payload = utils.decode_jwt(token=token)
     except InvalidTokenError as e:
@@ -156,7 +158,7 @@ def validate_token_type(payload: dict, token_type: str) -> bool:
     )
 
 
-def get_user_by_token_sub(payload: dict) -> AdminBase:
+def get_user_by_token_sub(payload: dict) -> Admin:
     name: str | None = payload.get("sub")
     if admin := admins_db.get(name):
         return admin
@@ -169,7 +171,7 @@ def get_user_by_token_sub(payload: dict) -> AdminBase:
 
 
 def get_auth_admin_from_token_of_type(token_type: str):
-    def get_auth_admin_from_token(payload: dict = Depends(get_current_token_payload)) -> AdminBase:
+    def get_auth_admin_from_token(payload: dict = Depends(get_current_token_payload)) -> Admin:
         validate_token_type(payload=payload, token_type=token_type)
         return get_user_by_token_sub(payload=payload)
     return get_auth_admin_from_token
@@ -182,7 +184,7 @@ get_current_auth_user_for_refresh = get_auth_admin_from_token_of_type(
 
 @ router.post('/login/', response_model=TokenInfo)
 def auth_admin_issue_jwt(
-    admin: AdminBase = Depends(validate_admin)
+    admin: Admin = Depends(validate_admin)
 ):
     access_token = create_access_token(admin)
     refresh_token = create_refresh_token(admin)
@@ -198,7 +200,7 @@ def auth_admin_issue_jwt(
     response_model_exclude_none=True
 )
 def auth_refresh_jwt(
-    admin: AdminBase = Depends(get_current_auth_user_for_refresh)
+    admin: Admin = Depends(get_current_auth_user_for_refresh)
 ):
     access_token = create_access_token(admin)
     return TokenInfo(
@@ -208,7 +210,7 @@ def auth_refresh_jwt(
 
 @ router.get("/me/")
 def auth_admin_check_sef_info(
-    admin: AdminBase = Depends(get_current_auth_admin),
+    admin: Admin = Depends(get_current_auth_admin),
 ):
     return {
         "name": admin.username,

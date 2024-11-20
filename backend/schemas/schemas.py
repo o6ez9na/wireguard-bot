@@ -42,7 +42,7 @@ class Client(ClientCreate):
 class AdminBase(BaseModel):
     username: Annotated[str, MinLen(3), MaxLen(20)]
     telegram_id: str
-    password: str
+    password: bytes
     public_key: str
     private_key: str
     config: str
