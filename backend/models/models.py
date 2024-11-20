@@ -18,7 +18,7 @@ class ClientBase(Base):
 class AdminBase(Base):
     __abstract__ = True
 
-    name: Mapped[str]
+    username: Mapped[str]
     password: Mapped[str]
     telegram_id: Mapped[str]
     public_key: Mapped[str]
