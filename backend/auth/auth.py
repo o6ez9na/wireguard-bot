@@ -1,6 +1,10 @@
 from schemas.schemas import TokenInfo, AdminBase
 import auth.utils as utils
 from fastapi import APIRouter, Depends, Form, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from jwt.exceptions import InvalidTokenError
+
+http_bearer = HTTPBearer()
 
 router = APIRouter()
 
@@ -34,7 +38,7 @@ def validate_admin(
 ):
     unauthed_exceptions = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="invalid username or password",
+        detail="invalid name or password",
     )
 
     if not (admin := admins_db.get(name)):
@@ -64,3 +68,40 @@ def auth_admin_issue_jwt(
         access_token=token,
         token_type="Bearer"
     )
+
+
+def get_curent_token_payload(
+    credentials: HTTPAuthorizationCredentials = Depends(http_bearer)
+) -> AdminBase:
+    token = credentials.credentials
+    try:
+        payload = utils.decode_jwt(token=token)
+    except InvalidTokenError as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="invalid token"
+        )
+    return payload
+
+
+def get_curent_auth_admin(
+    payload: dict = Depends(get_curent_token_payload)
+) -> AdminBase:
+    name: str | None = payload.get("sub")
+    if admin := admins_db.get(name):
+        return admin
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="token invalid"
+    )
+
+
+@ router.get("/me/")
+def auth_admin_check_sef_info(
+    admin: AdminBase = Depends(get_curent_auth_admin),
+):
+    return {
+        "name": admin.name,
+        "telegram_id": admin.telegram_id,
+        "config": admin.config,
+    }
