@@ -1,15 +1,15 @@
 from schemas.schemas import TokenInfo, AdminBase
 import auth.utils as utils
 from fastapi import APIRouter, Depends, Form, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials, OAuth2PasswordBearer
 from jwt.exceptions import InvalidTokenError
 
-http_bearer = HTTPBearer()
-
+# http_bearer = HTTPBearer()
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/admin/login/")
 router = APIRouter()
 
 john = AdminBase(
-    name='john',
+    username='john',
     telegram_id='1234',
     password=utils.hash_password("qwerty"),
     public_key='public_key',
@@ -18,7 +18,7 @@ john = AdminBase(
 )
 
 sam = AdminBase(
-    name='sam',
+    username='sam',
     telegram_id='12334',
     password=utils.hash_password("qwerty"),
     public_key='public_key',
@@ -27,13 +27,13 @@ sam = AdminBase(
 )
 
 admins_db: dict[str, AdminBase] = {
-    john.name: john,
-    sam.name: sam,
+    john.username: john,
+    sam.username: sam,
 }
 
 
 def validate_admin(
-    name: str = Form(),
+    username: str = Form(),
     password: str = Form(),
 ):
     unauthed_exceptions = HTTPException(
@@ -41,7 +41,7 @@ def validate_admin(
         detail="invalid name or password",
     )
 
-    if not (admin := admins_db.get(name)):
+    if not (admin := admins_db.get(username)):
         raise unauthed_exceptions
 
     if utils.validate_password(
@@ -58,8 +58,8 @@ def auth_admin_issue_jwt(
     admin: AdminBase = Depends(validate_admin)
 ):
     jwt_payload = {
-        "sub": admin.name,
-        "name": admin.name,
+        "sub": admin.username,
+        "name": admin.username,
         "password": admin.password
     }
 
@@ -71,10 +71,10 @@ def auth_admin_issue_jwt(
 
 
 def get_curent_token_payload(
-    credentials: HTTPAuthorizationCredentials = Depends(http_bearer)
+    token: str = Depends(oauth2_scheme)
 ) -> AdminBase:
-    token = credentials.credentials
     try:
+        print(token)
         payload = utils.decode_jwt(token=token)
     except InvalidTokenError as e:
         raise HTTPException(
