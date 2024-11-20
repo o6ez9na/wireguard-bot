@@ -5,8 +5,8 @@ from pathlib import Path
 
 
 class TokenInfo(BaseModel):
-    access_token: str
-    refresh_token: str | None = None
+    access: str
+    refresh: str | None = None
     token_type: str = "Bearer"
 
 
