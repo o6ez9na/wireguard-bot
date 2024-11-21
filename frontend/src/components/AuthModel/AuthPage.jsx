@@ -13,11 +13,12 @@ export default function AuthPage() {
     try {
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
-      console.log(username, password);
-      const response = await Instance.post("/admin/login/", {
-        username: username,
-        password: password,
-      });
+
+      const formData = new FormData();
+
+      formData.append("username", username);
+      formData.append("password", password);
+      const response = await Instance.post("/admin/login/", formData, {});
 
       localStorage.setItem("access", response.data.access);
       localStorage.setItem("refresh", response.data.refresh);

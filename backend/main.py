@@ -10,12 +10,10 @@ app.include_router(user_router)
 app.include_router(admin_router)
 app.add_middleware(
     CORSMiddleware,
-    # Разрешает доступ с любых доменов (например, из браузера на другом порту)
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
     allow_credentials=True,
-    # Разрешает все HTTP-методы (GET, POST, PUT, DELETE и т.д.)
     allow_methods=["*"],
-    allow_headers=["*"],  # Разрешает все заголовки
+    allow_headers=["*"],
 )
 
 if __name__ == "__main__":
