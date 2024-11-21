@@ -11,19 +11,21 @@ export default function AuthPage() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); // Состояние для ошибки
-  const [isErrorVisible, setIsErrorVisible] = useState(false); // Состояние видимости ошибки
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
 
       const formData = new FormData();
-
       formData.append("username", username);
       formData.append("password", password);
+
       const response = await Instance.post("/admin/login/", formData, {});
 
       localStorage.setItem("access", response.data.access);
@@ -32,10 +34,13 @@ export default function AuthPage() {
       navigate("/dashboard");
     } catch (err) {
       setErrorMessage(err.message);
-      setIsErrorVisible(true); // Показываем ошибку
+      setIsErrorVisible(true);
       setTimeout(() => {
-        setIsErrorVisible(false); // Скрываем ошибку через 5 секунд
+        setIsErrorVisible(false);
       }, 5000);
+
+      // Возвращаем форму в случае ошибки
+      setTimeout(() => setIsLoading(false), 500);
     }
   };
 
@@ -53,29 +58,32 @@ export default function AuthPage() {
         <div className="waves"></div>
         <div className="waves"></div>
         <div className="waves"></div>
-        {isErrorVisible && <ErrorNotification text={errorMessage} />}{" "}
-        {/* Отображаем ошибку, если она есть */}
+        {isErrorVisible && <ErrorNotification text={errorMessage} />}
         <div className="auth-form">
           <Welcome />
-          <div>
-            <form onSubmit={handleSubmit}>
-              <div className="auth-input-control">
-                <input
-                  type="text"
-                  placeholder="Username"
-                  className="auth-input-styler-user"
-                  onChange={handleChangeUsername}
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  className="auth-input-styler-password"
-                  onChange={handleChangePassword}
-                />
-                <LoginBtn />
-              </div>
-            </form>
-          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="auth-input-control">
+              {!isLoading ? (
+                <>
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    className="auth-input-styler-user fade-in"
+                    onChange={handleChangeUsername}
+                  />
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    className="auth-input-styler-password fade-in"
+                    onChange={handleChangePassword}
+                  />
+                  <LoginBtn />
+                </>
+              ) : (
+                <div className="loading-spinner fade-in"></div>
+              )}
+            </div>
+          </form>
         </div>
       </div>
     </>
