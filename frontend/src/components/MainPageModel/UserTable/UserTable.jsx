@@ -1,41 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Switch from "../Switch/Switch";
+import Instance from "../../../api/instance/Instance";
 
 export default function UserTable() {
-  const [data, setData] = useState([
-    {
-      id: 1,
-      menu: "Dashboard",
-      enabled: true,
-      name: "Alice",
-      public_key: "1234",
-      private_key: "4321",
-      description: "I don't have a description",
-    },
-    {
-      id: 2,
-      menu: "Settings",
-      enabled: false,
-      name: "Bob",
-      public_key: "1234",
-      private_key: "4321",
-      description: "I don't have a description",
-    },
-    {
-      id: 3,
-      menu: "Reports",
-      enabled: true,
-      name: "Charlie",
-      public_key: "1234",
-      private_key: "4321",
-      description: "I don't have a description",
-    },
-  ]);
+  const [data, setData] = useState([]);
 
-  // Функция для обновления состояния переключателя
-  const handleSwitchChange = (id, newStatus) => {
+  // Функция для загрузки данных из базы
+  const fetchData = async () => {
+    try {
+      const response = await Instance.get("/client");
+      setData(response.data);
+    } catch (error) {
+      console.error("Ошибка при загрузке данных:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // Обновление состояния в родительском компоненте при изменении статуса переключателя
+  const handleSwitchChange = (user, newStatus) => {
     const updatedData = data.map((row) =>
-      row.id === id ? { ...row, enabled: newStatus } : row
+      row.id === user.id ? { ...row, is_active: newStatus } : row
     );
     setData(updatedData);
   };
@@ -58,13 +45,13 @@ export default function UserTable() {
           {data.map((row) => (
             <tr key={row.id}>
               <td>{row.id}</td>
-              <td>{row.menu}</td>
+              <td>...</td>
               <td>
                 <Switch
-                  id={`switch-${row.id}`} // Уникальный id для каждого переключателя
-                  checked={row.enabled}
-                  onChange={(newStatus) =>
-                    handleSwitchChange(row.id, newStatus)
+                  user={row} // Передаем весь объект пользователя
+                  checked={row.is_active} // Убедитесь, что это свойство верно
+                  onChange={(user, newStatus) =>
+                    handleSwitchChange(user, newStatus)
                   }
                 />
               </td>

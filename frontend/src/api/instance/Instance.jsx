@@ -5,6 +5,7 @@ const Instance = axios.create({
   timeout: 5000,
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",
+    "Content-Type": "application/json",
   },
   withCredentials: true, // To enable cookies
 });

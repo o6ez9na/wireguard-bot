@@ -12,7 +12,7 @@
 
 .main-pannel-with-users {
   box-sizing: border-box;
-  min-height: 80vh;
+  min-height: 60vh;
   height: auto;
   background-color: rgb(25, 81, 65, 0.3);
   border-radius: 20px;
