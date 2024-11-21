@@ -14,10 +14,25 @@ export default function AuthPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isErrorVisible, setIsErrorVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+
+    // Запускаем анимацию исчезновения формы
+    setIsFadingOut(true);
+
+    // Ждем окончания анимации
+    setTimeout(() => {
+      setIsLoading(true); // Отображаем спиннер после исчезновения формы
+      setIsFadingOut(false); // Сбрасываем состояние анимации
+
+      // Выполняем запрос
+      submitLogin();
+    }, 500); // Время должно совпадать с CSS анимацией
+  };
+
+  const submitLogin = async () => {
     try {
       localStorage.removeItem("access");
       localStorage.removeItem("refresh");
@@ -35,22 +50,19 @@ export default function AuthPage() {
     } catch (err) {
       setErrorMessage(err.message);
       setIsErrorVisible(true);
+
+      // Показываем ошибку и возвращаем форму
+      setIsLoading(false);
+
       setTimeout(() => {
         setIsErrorVisible(false);
       }, 5000);
-
-      // Возвращаем форму в случае ошибки
-      setTimeout(() => setIsLoading(false), 500);
     }
   };
 
-  const handleChangeUsername = (e) => {
-    setUsername(e.target.value);
-  };
+  const handleChangeUsername = (e) => setUsername(e.target.value);
 
-  const handleChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
+  const handleChangePassword = (e) => setPassword(e.target.value);
 
   return (
     <>
@@ -62,25 +74,31 @@ export default function AuthPage() {
         <div className="auth-form">
           <Welcome />
           <form onSubmit={handleSubmit}>
-            <div className="auth-input-control">
+            <div
+              className={`auth-input-control ${
+                isFadingOut ? "fade-out" : isLoading ? "fade-in" : ""
+              }`}
+            >
               {!isLoading ? (
                 <>
                   <input
                     type="text"
                     placeholder="Username"
-                    className="auth-input-styler-user fade-in"
+                    className="auth-input-styler-user"
+                    value={username}
                     onChange={handleChangeUsername}
                   />
                   <input
                     type="password"
                     placeholder="Password"
-                    className="auth-input-styler-password fade-in"
+                    className="auth-input-styler-password"
+                    value={password}
                     onChange={handleChangePassword}
                   />
                   <LoginBtn />
                 </>
               ) : (
-                <div className="loading-spinner fade-in"></div>
+                <div className="loading-spinner"></div>
               )}
             </div>
           </form>
