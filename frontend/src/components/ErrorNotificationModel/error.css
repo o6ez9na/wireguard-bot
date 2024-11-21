@@ -1,10 +1,26 @@
 .error-wrapper {
   position: absolute;
   top: 20px;
-  left: 20px;
+  left: -220px; /* Начальная позиция за экраном */
   height: 70px;
   width: 200px;
-  background-color: salmon;
-  border: 2px solid rgb(176, 0, 0, 0.5);
+  background-color: rgb(250, 128, 114, 0.8);
+  border: 3px solid rgb(176, 0, 0, 0.3);
+  color: rgb(176, 0, 0, 0.9);
+  font-weight: 500;
   border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: left 0.5s ease-in-out;
+}
+
+.error-wrapper.show {
+  left: 20px;
+}
+
+.error-wrapper.hide {
+  left: -240px;
+  transition: left 0.5s ease-in-out;
 }

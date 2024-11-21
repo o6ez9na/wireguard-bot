@@ -3,13 +3,16 @@ import { useNavigate } from "react-router-dom";
 import "../style.css";
 import LoginBtn from "../LoginButtonModel/LoginBtn";
 import Welcome from "../WelcomeModel/Welcome";
-// import ErrorNotification from "../ErrorNotificationModel/ErrorNotification";
+import ErrorNotification from "../ErrorNotificationModel/ErrorNotification";
 import Instance from "../../api/instance/Instance";
+
 export default function AuthPage() {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // Состояние для ошибки
+  const [isErrorVisible, setIsErrorVisible] = useState(false); // Состояние видимости ошибки
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,19 +31,30 @@ export default function AuthPage() {
 
       navigate("/dashboard");
     } catch (err) {
-      console.error(err);
+      setErrorMessage(err.message);
+      setIsErrorVisible(true); // Показываем ошибку
+      setTimeout(() => {
+        setIsErrorVisible(false); // Скрываем ошибку через 5 секунд
+      }, 5000);
     }
   };
 
-  const handleChangeUsername = async (e) => {
+  const handleChangeUsername = (e) => {
     setUsername(e.target.value);
   };
-  const handleChangePassword = async (e) => {
+
+  const handleChangePassword = (e) => {
     setPassword(e.target.value);
   };
+
   return (
     <>
       <div className="auth-page-wrapper">
+        <div className="waves"></div>
+        <div className="waves"></div>
+        <div className="waves"></div>
+        {isErrorVisible && <ErrorNotification text={errorMessage} />}{" "}
+        {/* Отображаем ошибку, если она есть */}
         <div className="auth-form">
           <Welcome />
           <div>
