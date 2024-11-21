@@ -1,11 +1,12 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import { getCookie } from "../../helpers/cookies";
 
 const PrivateRoute = ({ children }) => {
-  const isAuthenticated = localStorage.getItem("accessToken"); // Проверка авторизации
+  const isAuthenticated = getCookie("access");
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/authorization" replace />;
   }
 
   return <>{children}</>;

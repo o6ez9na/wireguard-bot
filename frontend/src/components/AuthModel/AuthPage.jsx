@@ -5,6 +5,7 @@ import LoginBtn from "../LoginButtonModel/LoginBtn";
 import Welcome from "../WelcomeModel/Welcome";
 import ErrorNotification from "../ErrorNotificationModel/ErrorNotification";
 import Instance from "../../api/instance/Instance";
+import { setCookie } from "../../helpers/cookies";
 
 export default function AuthPage() {
   const navigate = useNavigate();
@@ -34,17 +35,13 @@ export default function AuthPage() {
 
   const submitLogin = async () => {
     try {
-      localStorage.removeItem("access");
-      localStorage.removeItem("refresh");
-
       const formData = new FormData();
       formData.append("username", username);
       formData.append("password", password);
 
       const response = await Instance.post("/admin/login/", formData, {});
-
-      localStorage.setItem("access", response.data.access);
-      localStorage.setItem("refresh", response.data.refresh);
+      setCookie("access", response.data.access);
+      setCookie("refresh", response.data.refresh);
 
       navigate("/dashboard");
     } catch (err) {

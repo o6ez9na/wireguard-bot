@@ -2,6 +2,7 @@
   width: 100%;
   min-height: 100vh;
   height: auto;
+  gap: 10px;
   background-color: #f0f2f5;
   display: flex;
   flex-direction: column;
@@ -15,7 +16,7 @@
   height: auto;
   background-color: rgb(25, 81, 65, 0.3);
   border-radius: 20px;
-  width: 60%;
+  width: 80%;
   padding: 40px;
   display: flex;
   flex-direction: column;
@@ -23,19 +24,10 @@
   border: 1px solid rgb(0, 0, 0, 0.2);
 }
 
-.user-particle {
+.user-table-wrapper {
   width: 100%;
-  min-height: 120px;
-  background-color: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(0, 0, 0, 0.4);
-  transition: 0.3s ease;
 }
 
-.user-particle:hover {
-  transform: scale(1.005);
-}
 .main-icon-user {
   display: flex;
   justify-content: center;
@@ -77,4 +69,73 @@
 .user-icons {
   display: flex;
   justify-content: space-between;
+}
+
+.users-info-wrapper {
+  height: 200px;
+  box-sizing: border-box;
+  background-color: rgb(25, 81, 65, 0.3);
+  border-radius: 20px;
+  width: 80%;
+  padding: 40px;
+  border: 1px solid rgb(0, 0, 0, 0.2);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate; /* Разделение ячеек для работы с border-radius */
+  border-spacing: 0; /* Убирает промежутки между ячейками */
+  border: 1px solid #ddd; /* Граница вокруг всей таблицы */
+  border-radius: 10px; /* Скругление углов таблицы */
+  overflow: hidden; /* Чтобы скругление не нарушалось */
+  font-size: 14px;
+}
+
+th,
+td {
+  padding: 12px 40px; /* Отступы для ячеек: 12px сверху/снизу, 20px слева/справа */
+  text-align: left; /* Выравнивание текста по левому краю */
+  border-bottom: 1px solid #ddd; /* Горизонтальная граница для строк */
+}
+
+th {
+  background-color: #ddd; /* Цвет фона для заголовков */
+  color: #282528; /* Цвет текста в заголовках */
+  font-weight: 500;
+}
+
+td {
+  background-color: #f9f9f9; /* Легкий фон для ячеек */
+}
+
+tbody tr:hover {
+  background-color: #e8f4f2; /* Цвет фона при наведении */
+  cursor: pointer;
+}
+
+tbody tr:hover td {
+  background-color: #e8f4f2; /* Цвет фона при наведении */
+  cursor: pointer;
+}
+
+/* Убираем вертикальные разделители между ячейками */
+th,
+td {
+  border-left: none;
+  border-right: none;
+}
+
+/* Скругление углов */
+tbody tr:first-child {
+  border-top-left-radius: 10px; /* Скругление левого верхнего угла первой строки */
+  border-top-right-radius: 10px; /* Скругление правого верхнего угла первой строки */
+}
+
+tbody tr:last-child {
+  border-bottom-left-radius: 10px; /* Скругление левого нижнего угла последней строки */
+  border-bottom-right-radius: 10px; /* Скругление правого нижнего угла последней строки */
+}
+
+tbody tr:not(:last-child) {
+  border-bottom: 1px solid #ddd; /* Горизонтальная линия между строками */
 }

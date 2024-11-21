@@ -1,10 +1,13 @@
 import React from "react";
 import "./main.css";
-import UserParticle from "./UserParticle/UserParticle";
+import UserTable from "./UserTable/UserTable";
+import UsersInfo from "./UsersInfo/UsersInfo";
 export default function MainPage() {
   return (
     <div className="main-page-wrapper">
-      <h1>Admin Panel</h1>
+      {/* <h1>Admin Panel</h1> */}
+      <UsersInfo />
+      {/* <Switch /> */}
       <div className="main-pannel-with-users">
         <div className="user-icons">
           <div className="main-icon-user">
@@ -22,10 +25,7 @@ export default function MainPage() {
             />
           </div>
         </div>
-        <UserParticle />
-        <UserParticle />
-        <UserParticle />
-        <UserParticle />
+        <UserTable />
       </div>
     </div>
   );
