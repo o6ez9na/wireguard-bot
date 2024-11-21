@@ -1,0 +1,135 @@
+.auth-page-wrapper {
+  background: linear-gradient(
+    45deg,
+    rgba(238, 223, 94, 1) 0%,
+    rgba(40, 158, 127, 1) 28%,
+    rgba(11, 137, 142, 1) 69%,
+    rgba(0, 212, 255, 1) 100%
+  );
+  background-size: 200% 200%; /* Увеличиваем размер градиента для эффекта переливания */
+  animation: gradientFlow 30s infinite ease; /* Анимация движения */
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-form {
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 400px !important;
+  height: 450px !important;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  transition: 0.3s ease-in-out;
+  padding: 40px;
+}
+
+.auth-form:hover {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.auth-form h1 {
+  overflow: hidden;
+  font-size: 3.5rem;
+  line-height: 4.5rem;
+  margin: 0;
+  opacity: 0;
+  transition: opacity 1s ease-in-out; /* Плавное изменение прозрачности */
+}
+
+.auth-form h1.show {
+  opacity: 1;
+}
+
+.auth-input-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-login-btn {
+  width: 100%;
+  height: 50px;
+  margin-top: 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  background-color: rgb(0, 135, 113);
+  border: none;
+  position: relative; /* Для позиционирования псевдоэлемента относительно кнопки */
+  overflow: hidden; /* Чтобы блик не выходил за пределы кнопки */
+  transition: 0.3s ease;
+}
+
+.auth-login-btn:hover {
+  background-color: rgb(25, 81, 65);
+  width: 90%;
+  height: 50px;
+}
+
+.auth-input-styler-password {
+  height: 50px;
+  width: 100%;
+  padding: 0px 0px 0px 45px;
+  box-sizing: border-box;
+  border-radius: 50px;
+  transition: 0.5s ease;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  outline: none;
+  background-color: rgb(240, 248, 255, 0.3);
+  color: gray;
+  font-size: 18px;
+  background-image: url("../../public/auth-icons/key-chain.svg");
+  background-position: 10px center;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+
+.auth-input-styler-user {
+  height: 50px;
+  width: 100%;
+  padding: 0px 0px 0px 45px;
+  box-sizing: border-box;
+  border-radius: 50px;
+  transition: 0.5s ease;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  outline: none;
+  background-color: rgb(240, 248, 255, 0.3);
+  color: gray;
+  font-size: 18px;
+  background-image: url("../../public/auth-icons/user.svg");
+  background-position: 10px center;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+
+.auth-input-styler:hover {
+  background-color: rgb(0, 135, 113, 0.1);
+  border: 1px solid rgb(0, 135, 113);
+}
+
+.auth-input-styler:focus {
+  background-color: rgb(0, 135, 113, 0.1);
+  border: 1px solid rgb(0, 135, 113);
+  box-shadow: 0 0 1px 1px rgba(58, 211, 186, 0.7);
+}
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%; /* Начало движения */
+  }
+  20% {
+    background-position: 20% 50%;
+  }
+  50% {
+    background-position: 100% 50%; /* Градиент "переливается" */
+  }
+  80% {
+    background-position: 20% 50%;
+  }
+  100% {
+    background-position: 0% 50%; /* Возвращение в исходное положение */
+  }
+}

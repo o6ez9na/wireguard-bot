@@ -1,0 +1,72 @@
+.login-button {
+  font-size: 17px;
+  letter-spacing: 1px;
+  padding: 20px 30px;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.login-button:hover .wave {
+  top: -190px;
+}
+
+.login-button span {
+  position: relative;
+}
+
+.login-button .wave {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  height: 250px;
+  background: linear-gradient(45deg, rgb(25, 81, 65), rgb(0, 135, 113));
+  transition: 0.5s ease;
+}
+
+.login-button:hover {
+  width: 90%;
+}
+.login-button .wave:after,
+.login-button .wave:before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -75%);
+}
+
+.login-button .wave:after {
+  border-radius: 40%;
+  background: rgba(51, 51, 51, 0.5);
+  animation: wave 7s linear infinite;
+}
+
+.login-button .wave:before {
+  border-radius: 45%;
+  background: #333333;
+  animation: wave 12s linear infinite;
+}
+
+@keyframes wave {
+  0% {
+    transform: translate(-50%, -75%) rotate(0deg);
+  }
+  0% {
+    transform: translate(-50%, -75%) rotate(360deg);
+  }
+}
