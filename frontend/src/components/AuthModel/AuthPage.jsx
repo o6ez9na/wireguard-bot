@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../style.css";
 import LoginBtn from "../LoginButtonModel/LoginBtn";
 import Welcome from "../WelcomeModel/Welcome";
 // import ErrorNotification from "../ErrorNotificationModel/ErrorNotification";
 import Instance from "../../api/instance/Instance";
 export default function AuthPage() {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,6 +25,8 @@ export default function AuthPage() {
 
       localStorage.setItem("access", response.data.access);
       localStorage.setItem("refresh", response.data.refresh);
+
+      navigate("/dashboard");
     } catch (err) {
       console.error(err);
     }
