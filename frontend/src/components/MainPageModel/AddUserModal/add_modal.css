@@ -25,10 +25,16 @@
   border-radius: 8px;
   max-width: 400px;
   width: 100%;
+  max-height: 600px;
+  height: 100%;
   text-align: center;
   transform: translateY(-20px);
   opacity: 0;
   transition: transform 0.3s ease, opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .add-modal-overlay.show .add-modal-content {
