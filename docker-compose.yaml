@@ -1,5 +1,6 @@
 networks:
   wireguard:
+    driver: bridge
     name: "wireguard"
 
 services:
@@ -13,7 +14,7 @@ services:
     volumes:
      - ./backend:/usr/src/code
     networks:
-      - "wireguard"
+      - wireguard
 
   frontend:
     image: wg-react
@@ -25,4 +26,4 @@ services:
     volumes:
       - ./frontend/build:/usr/src/web/build
     networks:
-      - "wireguard"
+      - wireguard

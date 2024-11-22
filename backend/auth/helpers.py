@@ -150,9 +150,12 @@ def validate_token_type(payload: dict, token_type: str) -> bool:
     )
 
 
-def get_user_by_token_sub(payload: dict) -> Admin:
+async def get_user_by_token_sub(payload: dict,
+                                session: AsyncSession = Depends(
+                                    db_helper.session_dependency),
+                                ) -> Admin:
     name: str | None = payload.get("sub")
-    if admin := admins_db.get(name):
+    if admin := get_admin_by_username(username=name, session=session):
         return admin
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
