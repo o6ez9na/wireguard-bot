@@ -13,7 +13,7 @@ const Modal = ({ id, title, message, onDelete, onClose }) => {
   // Закрытие модального окна
   const handleClose = () => {
     setShowModal(false);
-    setTimeout(onClose, 300);
+    setTimeout(onClose, 300); // Закрытие с задержкой
   };
 
   const handleDelete = async () => {
@@ -30,33 +30,39 @@ const Modal = ({ id, title, message, onDelete, onClose }) => {
     } catch (error) {
       console.error("Error during deletion:", error);
     } finally {
-      setIsDeleting(false);
+      setIsDeleting(false); // Важно, чтобы спиннер скрывался, даже если произошла ошибка
     }
   };
 
   return (
     <div className={`modal-overlay ${showModal ? "show" : ""}`}>
       <form className="modal-content">
-        <h3>{title}</h3>
-        <p>{message}</p>
-        <div className="modal-buttons">
-          <button
-            onClick={handleDelete}
-            type="button"
-            className="delete-button"
-            disabled={isDeleting} // Блокируем кнопку во время удаления
-          >
-            {isDeleting ? "Deleting..." : "Delete"}
-          </button>
-          <button
-            type="button"
-            onClick={handleClose}
-            className="cancel-button"
-            disabled={isDeleting}
-          >
-            Close
-          </button>
-        </div>
+        {isDeleting ? (
+          <div className="modal-loader"></div>
+        ) : (
+          <>
+            <h3>{title}</h3>
+            <p>{message}</p>
+            <div className="modal-buttons">
+              <button
+                onClick={handleDelete}
+                type="button"
+                className="delete-button"
+                disabled={isDeleting} // Блокируем кнопку во время удаления
+              >
+                Delete
+              </button>
+              <button
+                type="button"
+                onClick={handleClose}
+                className="cancel-button"
+                disabled={isDeleting}
+              >
+                Close
+              </button>
+            </div>
+          </>
+        )}
       </form>
     </div>
   );
