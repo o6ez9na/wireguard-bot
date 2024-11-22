@@ -4,7 +4,7 @@ import "../style.css";
 import LoginBtn from "../LoginButtonModel/LoginBtn";
 import Welcome from "../WelcomeModel/Welcome";
 import ErrorNotification from "../ErrorNotificationModel/ErrorNotification";
-import Instance from "../../api/instance/Instance";
+import { Auth } from "../../api/instance/Instance";
 import { setCookie } from "../../helpers/cookies";
 
 export default function AuthPage() {
@@ -39,7 +39,7 @@ export default function AuthPage() {
       formData.append("username", username);
       formData.append("password", password);
 
-      const response = await Instance.post("/admin/login/", formData, {});
+      const response = await Auth.post("/admin/login/", formData, {});
       setCookie("access", response.data.access);
       setCookie("refresh", response.data.refresh);
 

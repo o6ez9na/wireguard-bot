@@ -17,6 +17,7 @@
   background-color: rgb(25, 81, 65, 0.3);
   border-radius: 20px;
   width: 80%;
+  max-width: 1000px;
   padding: 40px;
   display: flex;
   flex-direction: column;
@@ -58,7 +59,7 @@
     transform: rotate(0deg); /* Начальное положение */
   }
   to {
-    transform: rotate(-360deg); /* Конечное положение */
+    transform: rotate(360deg); /* Конечное положение */
   }
 }
 
@@ -72,11 +73,12 @@
 }
 
 .users-info-wrapper {
-  height: 200px;
+  height: 150px;
   box-sizing: border-box;
   background-color: rgb(25, 81, 65, 0.3);
   border-radius: 20px;
   width: 80%;
+  max-width: 1000px;
   padding: 40px;
   border: 1px solid rgb(0, 0, 0, 0.2);
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Switch from "../Switch/Switch";
 import Instance from "../../../api/instance/Instance";
+import SelectMenu from "../SelectMenu/SelectMenu";
 
 export default function UserTable() {
   const [data, setData] = useState([]);
@@ -28,7 +29,7 @@ export default function UserTable() {
   };
 
   return (
-    <div>
+    <div className="table-wrapper">
       <table className="user-table-wrapper">
         <thead>
           <tr>
@@ -45,7 +46,9 @@ export default function UserTable() {
           {data.map((row) => (
             <tr key={row.id}>
               <td>{row.id}</td>
-              <td>...</td>
+              <td>
+                <SelectMenu />
+              </td>
               <td>
                 <Switch
                   user={row} // Передаем весь объект пользователя
