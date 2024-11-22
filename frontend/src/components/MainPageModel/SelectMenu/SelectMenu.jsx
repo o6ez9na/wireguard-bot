@@ -25,21 +25,21 @@ export default function SelectMenu({ id, onDelete }) {
       setModalContent({ title: "Info Option", message: "You clicked Info." });
     } else if (option === "Option 3") {
       setModalContent({
-        title: "Delete Option",
-        message: "Are you sure you want to delete this item?",
+        title: "Are you sure?",
+        message: "The user will be permanently deleted",
       });
     }
 
-    setIsModalOpen(true); // Открываем модальное окно
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // Закрываем модальное окно
+    setIsModalOpen(false);
   };
 
   const handleDelete = () => {
-    onDelete(id); // Вызываем функцию удаления, переданную из родительского компонента
-    closeModal(); // Закрываем модальное окно
+    onDelete(id);
+    closeModal();
   };
 
   return (

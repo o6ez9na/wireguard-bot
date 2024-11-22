@@ -1,0 +1,52 @@
+/* Модальное окно */
+.add-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0; /* Сначала невидимо */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Плавное изменение */
+}
+
+.add-modal-overlay.show {
+  opacity: 1; /* Видимость */
+  transform: scale(1); /* Нормальный масштаб */
+}
+
+.add-modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.add-modal-overlay.show .add-modal-content {
+  transform: translateY(0); /* Обычное положение */
+  opacity: 1; /* Сделать содержимое видимым */
+}
+
+/* Стили для кнопки закрытия */
+.add-modal-overlay button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #ed0606;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.add-modal-overlay button:hover {
+  background-color: #e90e0e;
+}

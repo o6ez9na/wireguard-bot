@@ -14,19 +14,29 @@
   box-sizing: border-box;
   min-height: 60vh;
   height: auto;
-  background-color: rgb(25, 81, 65, 0.3);
+  background-color: #ecfaf4;
   border-radius: 20px;
   width: 80%;
   max-width: 1000px;
-  padding: 40px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  border: 1px solid rgb(0, 0, 0, 0.2);
+  border: 1px solid #49cc90;
 }
 
 .user-table-wrapper {
   width: 100%;
+}
+
+.main-hr {
+  margin-left: -30px;
+  margin-right: -30px;
+  width: auto;
+  border-top: 1px solid #49cc90;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
 }
 
 .main-icon-user {
@@ -36,16 +46,15 @@
   gap: 10px;
   width: 50px;
   height: 50px;
-  background-color: rgb(0, 135, 113);
+  background-color: #ecfaf4;
   border-radius: 20px;
   cursor: pointer;
   transition: 0.3s ease;
-  border: 1px solid rgba(0, 135, 113, 0.4);
+  border: 1px solid #49cc90;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
 }
 
 .main-icon-user img:hover {
-  background-color: rgba(0, 135, 113, 0.4);
   animation: rotate360 0.6s ease-out; /* Добавляем анимацию вращения */
 }
 
@@ -75,12 +84,12 @@
 .users-info-wrapper {
   height: 150px;
   box-sizing: border-box;
-  background-color: rgb(25, 81, 65, 0.3);
+  background-color: #ecfaf4;
   border-radius: 20px;
   width: 80%;
   max-width: 1000px;
   padding: 40px;
-  border: 1px solid rgb(0, 0, 0, 0.2);
+  border: 1px solid #49cc90;
 }
 
 table {

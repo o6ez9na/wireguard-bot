@@ -4,10 +4,9 @@ import Instance from "../../../api/instance/Instance"; // Импорт ваше�
 
 export default function Switch({ user, checked, onChange }) {
   const handleToggle = async () => {
-    const newStatus = !checked; // Новое состояние переключателя
-    onChange(user, newStatus); // Передаем объект пользователя и новое состояние
+    const newStatus = !checked;
+    onChange(user, newStatus);
     try {
-      // Отправляем PUT запрос на сервер
       await Instance.put(`/client/${user.id}/`, {
         id: user.id,
         name: user.name,
@@ -18,8 +17,6 @@ export default function Switch({ user, checked, onChange }) {
         is_active: newStatus,
         config: user.config,
       });
-
-      // После успешного запроса, обновляем состояние в родительском компоненте
     } catch (error) {
       console.error("Ошибка при обновлении переключателя:", error);
     }

@@ -15,10 +15,10 @@ class AuthJWT(BaseModel):
 
 
 class Settings(BaseSettings):
-    user: str = "postgres"
-    password: str = "postgres"
+    user: str = "o6ez9na"
+    password: str = "Rewq159874236!"
     host: str = "185.65.202.185"
-    port: str = "5432"
+    port: str = "1488"
     db_name: str = "wireguard"
 
     auth_jwt: AuthJWT = AuthJWT()
