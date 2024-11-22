@@ -1,3 +1,4 @@
+/* Оверлей */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -9,8 +10,12 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  opacity: 0; /* Начальная прозрачность */
+  pointer-events: none; /* Изначально оверлей не активен */
+  transition: opacity 0.3s ease; /* Плавный переход */
 }
 
+/* Плавное появление контента */
 .modal-content {
   background-color: #fff;
   padding: 20px;
@@ -18,16 +23,23 @@
   max-width: 400px;
   width: 100%;
   text-align: center;
+  transform: translateY(-30px); /* Начальная позиция для анимации */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Плавное изменение положения и прозрачности */
+  opacity: 0; /* Начальная прозрачность */
 }
 
-.modal-content h3 {
-  margin-bottom: 10px;
+/* Когда окно открыто */
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto; /* Включаем взаимодействие с оверлеем */
 }
 
-.modal-content p {
-  margin-bottom: 20px;
+.modal-overlay.show .modal-content {
+  transform: translateY(0); /* Контент появляется */
+  opacity: 1; /* Контент становится видимым */
 }
 
+/* Стиль кнопки в модальном окне */
 .modal-content button {
   padding: 10px 20px;
   border: none;
