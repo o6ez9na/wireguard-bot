@@ -15,21 +15,8 @@ export default function SelectMenu({ id, onDelete }) {
     setIsOpen((prev) => !prev);
   };
 
-  const handleOptionClick = (option) => {
+  const handleOptionClick = () => {
     setIsOpen(false);
-
-    // Устанавливаем данные для модального окна в зависимости от выбранной опции
-    if (option === "Option 1") {
-      setModalContent({ title: "Edit Option", message: "You clicked Edit." });
-    } else if (option === "Option 2") {
-      setModalContent({ title: "Info Option", message: "You clicked Info." });
-    } else if (option === "Option 3") {
-      setModalContent({
-        title: "Are you sure?",
-        message: "The user will be permanently deleted",
-      });
-    }
-
     setIsModalOpen(true);
   };
 
@@ -61,7 +48,7 @@ export default function SelectMenu({ id, onDelete }) {
             }}
           >
             <ul>
-              <li onClick={() => handleOptionClick("Option 1")}>
+              <li>
                 <img
                   src={process.env.PUBLIC_URL + "/auth-icons/edit.svg"}
                   alt="Edit Icon"
@@ -69,7 +56,7 @@ export default function SelectMenu({ id, onDelete }) {
                 />
                 Edit
               </li>
-              <li onClick={() => handleOptionClick("Option 2")}>
+              <li>
                 <img
                   src={process.env.PUBLIC_URL + "/auth-icons/info.svg"}
                   alt="Info Icon"
@@ -77,10 +64,7 @@ export default function SelectMenu({ id, onDelete }) {
                 />
                 Info
               </li>
-              <li
-                onClick={() => handleOptionClick("Option 3")}
-                className="option-trash"
-              >
+              <li className="option-trash" onClick={() => handleOptionClick()}>
                 <img
                   src={process.env.PUBLIC_URL + "/auth-icons/trash.svg"}
                   alt="Trash Icon"
@@ -97,8 +81,8 @@ export default function SelectMenu({ id, onDelete }) {
       {isModalOpen && (
         <Modal
           id={id}
-          title={modalContent.title}
-          message={modalContent.message}
+          title={"Are you sure?"}
+          message={"This user will be deleted once and for all"}
           onClose={closeModal}
           onDelete={handleDelete} // Передаем функцию удаления в Modal
         />
