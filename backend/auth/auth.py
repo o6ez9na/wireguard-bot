@@ -8,7 +8,7 @@ router = APIRouter(dependencies=[Depends(http_bearer)])
 
 
 @ router.post('/login/', response_model=TokenInfo)
-def auth_admin_issue_jwt(
+async def auth_admin_issue_jwt(
     admin: Admin = Depends(validate_admin)
 
 ):
@@ -25,7 +25,7 @@ def auth_admin_issue_jwt(
     response_model=TokenInfo,
     response_model_exclude_none=True
 )
-def auth_refresh_jwt(
+async def auth_refresh_jwt(
     admin: Admin = Depends(get_current_auth_user_for_refresh)
 ):
     access_token = create_access_token(admin)
@@ -35,7 +35,7 @@ def auth_refresh_jwt(
 
 
 @ router.get("/me/")
-def auth_admin_check_sef_info(
+async def auth_admin_check_sef_info(
     admin: Admin = Depends(get_current_auth_admin),
 ):
     return {

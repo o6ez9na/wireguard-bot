@@ -4,9 +4,9 @@ from auth.helpers import ACCESS_TOKEN_TYPE, REFRESH_TOKEN_TYPE
 
 
 def get_auth_admin_from_token_of_type(token_type: str):
-    def get_auth_admin_from_token(payload: dict = Depends(get_current_token_payload)) -> Admin:
+    async def get_auth_admin_from_token(payload: dict = Depends(get_current_token_payload)) -> Admin:
         validate_token_type(payload=payload, token_type=token_type)
-        return get_user_by_token_sub(payload=payload)
+        return await get_user_by_token_sub(payload=payload)
     return get_auth_admin_from_token
 
 

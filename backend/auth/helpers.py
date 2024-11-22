@@ -126,7 +126,7 @@ async def validate_admin(
     raise unauthed_exceptions
 
 
-def get_current_token_payload(
+async def get_current_token_payload(
     token: str = Depends(oauth2_scheme)
 ) -> Admin:
     try:
@@ -155,8 +155,11 @@ async def get_user_by_token_sub(payload: dict,
                                     db_helper.session_dependency),
                                 ) -> Admin:
     name: str | None = payload.get("sub")
-    if admin := get_admin_by_username(username=name, session=session):
-        return admin
+    if name:
+        admin = await get_admin_by_username(username=name, session=session)
+        if admin:
+            return admin
+
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="token invalid"
