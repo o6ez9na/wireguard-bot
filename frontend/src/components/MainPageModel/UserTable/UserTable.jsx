@@ -3,7 +3,7 @@ import Switch from "../Switch/Switch";
 import Instance from "../../../api/instance/Instance";
 import SelectMenu from "../SelectMenu/SelectMenu";
 
-export default function UserTable() {
+export default function UserTable({ shouldUpdate }) {
   const [data, setData] = useState([]);
 
   // Функция для загрузки данных из базы
@@ -16,9 +16,10 @@ export default function UserTable() {
     }
   };
 
+  // Загружаем данные при монтировании компонента и при изменении shouldUpdate
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [shouldUpdate]); // fetchData будет вызываться при каждом изменении shouldUpdate
 
   // Обновление состояния в родительском компоненте при изменении статуса переключателя
   const handleSwitchChange = (user, newStatus) => {

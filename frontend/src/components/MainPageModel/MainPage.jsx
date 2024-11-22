@@ -6,6 +6,7 @@ import { AddUserModal } from "./AddUserModal/AddUserModal";
 
 export default function MainPage() {
   const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для отображения модального окна
+  const [shouldUpdateTable, setShouldUpdateTable] = useState(false); // Состояние для обновления таблицы
 
   // Открытие модального окна
   const openModal = () => {
@@ -17,11 +18,15 @@ export default function MainPage() {
     setIsModalOpen(false);
   };
 
+  // Функция для обновления данных в таблице
+  const updateTable = () => {
+    setShouldUpdateTable((prev) => !prev); // Изменяем состояние для триггера перерисовки
+  };
+
   return (
     <div className="main-page-wrapper">
       <UsersInfo />
       <div className="main-pannel-with-users">
-        {/* кнопочки */}
         <div className="user-icons">
           <div className="main-icon-user" onClick={openModal}>
             <img
@@ -39,9 +44,10 @@ export default function MainPage() {
           </div>
         </div>
         <hr className="main-hr"></hr>
-        <UserTable />
-        {/* Отображаем модальное окно, если оно открыто */}
-        {isModalOpen && <AddUserModal onClose={closeModal} />}
+        <UserTable shouldUpdate={shouldUpdateTable} />
+        {isModalOpen && (
+          <AddUserModal onClose={closeModal} onUserAdded={updateTable} />
+        )}
       </div>
     </div>
   );

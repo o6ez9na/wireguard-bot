@@ -35,6 +35,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.4);
 }
 
 .add-modal-overlay.show .add-modal-content {
@@ -55,4 +56,99 @@
 
 .add-modal-overlay button:hover {
   background-color: #e90e0e;
+}
+
+.user {
+  background-image: url("../../../../public/auth-icons/user.svg");
+}
+
+.description {
+  background-image: url("../../../../public/auth-icons/desc.svg");
+}
+
+.tg {
+  background-image: url("../../../../public/auth-icons/telegram.svg");
+}
+
+.public {
+  background-image: url("../../../../public/auth-icons/public.svg");
+}
+
+.private {
+  background-image: url("../../../../public/auth-icons/private.svg");
+}
+
+.config {
+  background-image: url("../../../../public/auth-icons/config.svg");
+}
+.modal-input-styler {
+  height: 50px;
+  width: 100%;
+  padding: 0px 0px 0px 45px;
+  box-sizing: border-box;
+  border-radius: 50px;
+  transition: 0.5s ease;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  outline: none;
+  background-color: rgb(240, 248, 255, 0.3);
+  color: gray;
+  font-size: 18px;
+  background-position: 10px center;
+  background-repeat: no-repeat;
+  background-size: 30px;
+}
+
+.modal-input-styler:hover {
+  background-color: rgb(0, 135, 113, 0.1);
+  border: 1px solid rgb(0, 135, 113);
+}
+
+.modal-input-styler:focus {
+  background-color: rgb(0, 135, 113, 0.1);
+  border: 1px solid rgb(0, 135, 113);
+  box-shadow: 0 0 1px 1px rgba(58, 211, 186, 0.7);
+}
+
+.modal-input-controller {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  background-image: url("../../../../public/auth-icons/close.svg");
+  background-size: contain; /* Масштабируем иконку по размеру контейнера */
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.add-modal-button-submit {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  width: 150px;
+  height: 40px;
+  background-color: rgb(240, 248, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  color: gray;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.add-modal-button-submit:hover {
+  color: rgba(0, 0, 0, 0.7);
+  width: 130px;
+  background-color: rgb(0, 135, 113, 0.1);
+  border: 1px solid rgb(0, 135, 113);
+  box-shadow: 0 0 1px 1px rgba(58, 211, 186, 0.7);
 }
