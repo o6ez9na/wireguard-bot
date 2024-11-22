@@ -47,7 +47,7 @@ export default function UserTable() {
             <tr key={row.id}>
               <td>{row.id}</td>
               <td>
-                <SelectMenu />
+                <SelectMenu user={row} />
               </td>
               <td>
                 <Switch

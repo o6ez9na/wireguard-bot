@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
+import Modal from "./Modal/Modal"; // Импортируем компонент модального окна
 import "./menu.css";
 
 export default function SelectMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+  const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для открытия модального окна
+  const [modalContent, setModalContent] = useState({ title: "", message: "" }); // Данные для модального окна
 
   const toggleMenu = (event) => {
     const rect = event.target.getBoundingClientRect();
@@ -13,8 +16,25 @@ export default function SelectMenu() {
   };
 
   const handleOptionClick = (option) => {
-    console.log(`Вы выбрали: ${option}`);
     setIsOpen(false);
+
+    // Устанавливаем данные для модального окна в зависимости от выбранной опции
+    if (option === "Option 1") {
+      setModalContent({ title: "Edit Option", message: "You clicked Edit." });
+    } else if (option === "Option 2") {
+      setModalContent({ title: "Info Option", message: "You clicked Info." });
+    } else if (option === "Option 3") {
+      setModalContent({
+        title: "Delete Option",
+        message: "You clicked Delete.",
+      });
+    }
+
+    setIsModalOpen(true); // Открываем модальное окно
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Закрываем модальное окно
   };
 
   return (
@@ -47,7 +67,7 @@ export default function SelectMenu() {
               <li onClick={() => handleOptionClick("Option 2")}>
                 <img
                   src={process.env.PUBLIC_URL + "/auth-icons/info.svg"}
-                  alt="Edit Icon"
+                  alt="Info Icon"
                   className="menu-icon"
                 />
                 Info
@@ -55,7 +75,7 @@ export default function SelectMenu() {
               <li onClick={() => handleOptionClick("Option 3")}>
                 <img
                   src={process.env.PUBLIC_URL + "/auth-icons/trash.svg"}
-                  alt="Edit Icon"
+                  alt="Trash Icon"
                   className="menu-icon"
                 />
                 Delete
@@ -64,6 +84,15 @@ export default function SelectMenu() {
           </div>,
           document.body
         )}
+
+      {/* Показываем модальное окно, если состояние isModalOpen истинно */}
+      {isModalOpen && (
+        <Modal
+          title={modalContent.title}
+          message={modalContent.message}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 }
