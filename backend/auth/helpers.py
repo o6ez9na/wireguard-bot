@@ -98,6 +98,7 @@ def create_refresh_token(admin: Admin) -> str:
 
 async def get_admin_by_username(username: str, session: AsyncSession) -> Admin:
     query = select(Admin).where(Admin.username == username)
+    print(session)
     result = await session.execute(query)
     admin = result.scalar_one_or_none()
 
@@ -151,8 +152,7 @@ def validate_token_type(payload: dict, token_type: str) -> bool:
 
 
 async def get_user_by_token_sub(payload: dict,
-                                session: AsyncSession = Depends(
-                                    db_helper.session_dependency),
+                                session: AsyncSession,
                                 ) -> Admin:
     name: str | None = payload.get("sub")
     if name:
