@@ -28,6 +28,13 @@ export default function UserTable() {
     setData(updatedData);
   };
 
+  // Функция для удаления пользователя
+  const handleDeleteUser = (id) => {
+    // Удаляем пользователя из таблицы
+    const updatedData = data.filter((row) => row.id !== id);
+    setData(updatedData);
+  };
+
   return (
     <div className="table-wrapper">
       <table className="user-table-wrapper">
@@ -47,7 +54,8 @@ export default function UserTable() {
             <tr key={row.id}>
               <td>{row.id}</td>
               <td>
-                <SelectMenu user={row} />
+                <SelectMenu id={row.id} onDelete={handleDeleteUser} />{" "}
+                {/* Передаем функцию удаления */}
               </td>
               <td>
                 <Switch

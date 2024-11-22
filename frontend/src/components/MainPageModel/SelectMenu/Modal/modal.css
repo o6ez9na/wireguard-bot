@@ -40,15 +40,34 @@
 }
 
 /* Стиль кнопки в модальном окне */
-.modal-content button {
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.delete-button {
   padding: 10px 20px;
   border: none;
-  background-color: #4caf50;
-  color: white;
   cursor: pointer;
   border-radius: 5px;
+  color: #ed0606;
+  transition: 0.3s ease;
 }
 
-.modal-content button:hover {
-  background-color: #45a049;
+.cancel-button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  color: rgb(0, 0, 0, 0.5);
+  transition: 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #e90e0e48;
+}
+
+.cancel-button:hover {
+  background-color: rgb(182, 127, 255);
+  color: rgb(0, 0, 0, 8);
 }

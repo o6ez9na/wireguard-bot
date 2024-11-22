@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import Modal from "./Modal/Modal"; // Импортируем компонент модального окна
 import "./menu.css";
 
-export default function SelectMenu() {
+export default function SelectMenu({ id, onDelete }) {
   const [isOpen, setIsOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для открытия модального окна
@@ -26,7 +26,7 @@ export default function SelectMenu() {
     } else if (option === "Option 3") {
       setModalContent({
         title: "Delete Option",
-        message: "You clicked Delete.",
+        message: "Are you sure you want to delete this item?",
       });
     }
 
@@ -35,6 +35,11 @@ export default function SelectMenu() {
 
   const closeModal = () => {
     setIsModalOpen(false); // Закрываем модальное окно
+  };
+
+  const handleDelete = () => {
+    onDelete(id); // Вызываем функцию удаления, переданную из родительского компонента
+    closeModal(); // Закрываем модальное окно
   };
 
   return (
@@ -72,7 +77,10 @@ export default function SelectMenu() {
                 />
                 Info
               </li>
-              <li onClick={() => handleOptionClick("Option 3")}>
+              <li
+                onClick={() => handleOptionClick("Option 3")}
+                className="option-trash"
+              >
                 <img
                   src={process.env.PUBLIC_URL + "/auth-icons/trash.svg"}
                   alt="Trash Icon"
@@ -88,9 +96,11 @@ export default function SelectMenu() {
       {/* Показываем модальное окно, если состояние isModalOpen истинно */}
       {isModalOpen && (
         <Modal
+          id={id}
           title={modalContent.title}
           message={modalContent.message}
           onClose={closeModal}
+          onDelete={handleDelete} // Передаем функцию удаления в Modal
         />
       )}
     </div>
