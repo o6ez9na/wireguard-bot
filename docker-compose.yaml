@@ -1,0 +1,28 @@
+networks:
+  wireguard:
+    name: "wireguard"
+
+services:
+  backend:
+    image: wg-fastapi
+    restart: always
+    build: ./backend
+    container_name: wg-fastapi
+    ports:
+      - "8000:8000"
+    volumes:
+     - ./backend:/usr/src/code
+    networks:
+      - "wireguard"
+
+  frontend:
+    image: wg-react
+    build: ./frontend
+    restart: always
+    container_name: wg-react
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/build:/usr/src/web/build
+    networks:
+      - "wireguard"
