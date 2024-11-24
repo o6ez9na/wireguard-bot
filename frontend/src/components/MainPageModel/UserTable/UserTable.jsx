@@ -6,11 +6,13 @@ import { AddUserModal } from "../AddUserModal/AddUserModal";
 
 export default function UserTable() {
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]); // Состояние для отфильтрованных данных
   const [openMenuId, setOpenMenuId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isTableVisible, setIsTableVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для отображения модального окна
   const [shouldUpdate, setShouldUpdateTable] = useState(false); // Состояние для обновления таблицы
+  const [searchQuery, setSearchQuery] = useState(""); // Состояние для хранения поискового запроса
 
   const fetchData = async () => {
     try {
@@ -18,6 +20,7 @@ export default function UserTable() {
       setIsLoading(true);
       const response = await Instance.get("/client");
       setData(response.data);
+      setFilteredData(response.data); // Инициализируем filteredData с полными данными
       setIsLoading(false);
       setTimeout(() => setIsTableVisible(true), 100);
     } catch (error) {
@@ -55,6 +58,22 @@ export default function UserTable() {
     setData(updatedData);
   };
 
+  // Функция для обновления поиска
+  const handleSearchChange = (event) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+
+    // Фильтрация данных по имени пользователя
+    if (query) {
+      const filtered = data.filter((user) =>
+        user.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(data); // Если поисковый запрос пустой, показываем все данные
+    }
+  };
+
   return (
     <>
       <div className="user-icons">
@@ -66,13 +85,19 @@ export default function UserTable() {
           />
         </div>
         <div className="search">
-          <input type="text" placeholder="Search..." className="search-input" />
+          <input
+            type="text"
+            placeholder="Search by name..."
+            className="search-input"
+            value={searchQuery} // Управляемое состояние для поиска
+            onChange={handleSearchChange} // Обработчик изменения поля поиска
+          />
           <button className="search-btn">
             <img
               className="search-icon"
               src={process.env.PUBLIC_URL + "/auth-icons/search.svg"}
               alt="search"
-            ></img>
+            />
           </button>
         </div>
         <div className="main-icon-user" onClick={fetchData}>
@@ -83,7 +108,7 @@ export default function UserTable() {
           />
         </div>
       </div>
-      <hr className="main-hr"></hr>
+      <hr className="main-hr" />
 
       <div className="table-wrapper">
         {!isLoading ? (
@@ -104,7 +129,7 @@ export default function UserTable() {
               </tr>
             </thead>
             <tbody>
-              {data.map((row) => (
+              {filteredData.map((row) => (
                 <tr key={row.id}>
                   <td>{row.id}</td>
                   <td>
@@ -115,7 +140,6 @@ export default function UserTable() {
                       onDelete={handleDeleteUser}
                     />
                   </td>
-
                   <td>
                     <Switch
                       user={row} // Передаем весь объект пользователя
