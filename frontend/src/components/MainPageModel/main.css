@@ -1,6 +1,6 @@
 .main-page-wrapper {
   width: auto;
-  /* min-height: 100vh; */
+  min-height: 100vh;
   height: auto;
   gap: 10px;
   background-color: #f0f2f5;
@@ -8,7 +8,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 80px;
+  /* padding: 0px; */
 }
 
 .main-pannel-with-users {
