@@ -13,7 +13,7 @@
 
 .main-pannel-with-users {
   box-sizing: border-box;
-  min-height: 55vh;
+  min-height: 70vh;
   height: auto;
   background-color: #ecfaf4;
   border-radius: 20px;
@@ -28,6 +28,14 @@
 
 .user-table-wrapper {
   width: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transform: translateY(20px); /* Изначально сдвигаем таблицу вниз */
+}
+
+.user-table-wrapper.visible-table {
+  opacity: 1;
+  transform: translateY(0); /* Возвращаем таблицу на место */
 }
 
 .main-hr {
