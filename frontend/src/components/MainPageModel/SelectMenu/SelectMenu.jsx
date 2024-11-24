@@ -109,18 +109,21 @@ export default function SelectMenu({
               </li>
             </ul>
           </div>,
-          document.body
+          document.body // Рендерим выпадающее меню в body
         )}
 
-      {isModalOpen && (
-        <Modal
-          id={id}
-          title={"Are you sure?"}
-          message={"This user will be deleted once and for all"}
-          onClose={closeModal}
-          onDelete={handleDelete}
-        />
-      )}
+      {/* Рендерим модальное окно через createPortal, чтобы оно отображалось на весь экран */}
+      {isModalOpen &&
+        createPortal(
+          <Modal
+            id={id}
+            title={"Are you sure?"}
+            message={"This user will be deleted once and for all"}
+            onClose={closeModal}
+            onDelete={handleDelete}
+          />,
+          document.body // Рендерим модалку в body
+        )}
     </div>
   );
 }
