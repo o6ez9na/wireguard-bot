@@ -5,6 +5,7 @@ import SelectMenu from "../SelectMenu/SelectMenu";
 
 export default function UserTable({ shouldUpdate }) {
   const [data, setData] = useState([]);
+  const [openMenuId, setOpenMenuId] = useState(null);
 
   // Функция для загрузки данных из базы
   const fetchData = async () => {
@@ -55,9 +56,14 @@ export default function UserTable({ shouldUpdate }) {
             <tr key={row.id}>
               <td>{row.id}</td>
               <td>
-                <SelectMenu id={row.id} onDelete={handleDeleteUser} />{" "}
-                {/* Передаем функцию удаления */}
+                <SelectMenu
+                  id={row.id}
+                  openMenuId={openMenuId}
+                  setOpenMenuId={setOpenMenuId}
+                  onDelete={handleDeleteUser}
+                />
               </td>
+
               <td>
                 <Switch
                   user={row} // Передаем весь объект пользователя

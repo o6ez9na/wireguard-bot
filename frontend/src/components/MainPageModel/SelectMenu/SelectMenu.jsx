@@ -1,22 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import Modal from "./Modal/Modal"; // Импортируем компонент модального окна
+import Modal from "./Modal/Modal";
 import "./menu.css";
 
-export default function SelectMenu({ id, onDelete }) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function SelectMenu({
+  id,
+  openMenuId,
+  setOpenMenuId,
+  onDelete,
+}) {
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
-  const [isModalOpen, setIsModalOpen] = useState(false); // Состояние для открытия модального окна
-  const [modalContent, setModalContent] = useState({ title: "", message: "" }); // Данные для модального окна
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const menuRef = useRef(null);
+  const buttonRef = useRef(null);
 
-  const toggleMenu = (event) => {
-    const rect = event.target.getBoundingClientRect();
-    setMenuPosition({ top: rect.bottom, left: rect.left });
-    setIsOpen((prev) => !prev);
+  const isOpen = openMenuId === id;
+
+  const toggleMenu = () => {
+    const rect = buttonRef.current.getBoundingClientRect();
+    setMenuPosition({ top: rect.bottom + window.scrollY, left: rect.left });
+
+    if (isOpen) {
+      setOpenMenuId(null);
+    } else {
+      setOpenMenuId(id);
+    }
   };
 
   const handleOptionClick = () => {
-    setIsOpen(false);
+    setOpenMenuId(null);
     setIsModalOpen(true);
   };
 
@@ -29,17 +41,40 @@ export default function SelectMenu({ id, onDelete }) {
     closeModal();
   };
 
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setOpenMenuId(null);
+    }
+  };
+
+  const handleScroll = () => {
+    if (isOpen) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setMenuPosition({ top: rect.bottom + window.scrollY, left: rect.left });
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isOpen]);
+
   return (
     <div>
-      <button className="menu-button" onClick={toggleMenu}>
+      <button ref={buttonRef} className="menu-button" onClick={toggleMenu}>
         &#x22EE;
       </button>
       {isOpen &&
         createPortal(
           <div
+            ref={menuRef}
             className="dropdown-menu"
             style={{
-              position: "fixed",
+              position: "absolute",
               top: `${menuPosition.top}px`,
               left: `${menuPosition.left}px`,
               opacity: 1,
@@ -77,14 +112,13 @@ export default function SelectMenu({ id, onDelete }) {
           document.body
         )}
 
-      {/* Показываем модальное окно, если состояние isModalOpen истинно */}
       {isModalOpen && (
         <Modal
           id={id}
           title={"Are you sure?"}
           message={"This user will be deleted once and for all"}
           onClose={closeModal}
-          onDelete={handleDelete} // Передаем функцию удаления в Modal
+          onDelete={handleDelete}
         />
       )}
     </div>

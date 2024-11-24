@@ -1,6 +1,6 @@
 .main-page-wrapper {
-  width: 100%;
-  min-height: 100vh;
+  width: auto;
+  /* min-height: 100vh; */
   height: auto;
   gap: 10px;
   background-color: #f0f2f5;
@@ -8,11 +8,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 80px;
 }
 
 .main-pannel-with-users {
   box-sizing: border-box;
-  min-height: 60vh;
+  min-height: 55vh;
   height: auto;
   background-color: #ecfaf4;
   border-radius: 20px;
