@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./add_modal.css";
 import Instance from "../../../api/instance/Instance";
 
@@ -11,6 +11,7 @@ export const AddUserModal = ({ onClose, onUserAdded }) => {
   const [pubkey, setPubkey] = useState("");
   const [privateKey, setPrivateKey] = useState("");
   const [config, setConfig] = useState("");
+  const modalRef = useRef(null); // Реф для модального окна
 
   const handleChangeTg_id = (e) => setTg_id(e.target.value);
   const handleChangeConfig = (e) => setConfig(e.target.value);
@@ -53,9 +54,24 @@ export const AddUserModal = ({ onClose, onUserAdded }) => {
     }, 300); // 300 ms – время, соответствующее продолжительности анимации
   };
 
+  // Закрытие модального окна при клике вне его
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      handleClose();
+    }
+  };
+
+  // Добавляем и удаляем обработчик кликов при монтировании и размонтировании компонента
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className={`add-modal-overlay ${isVisible ? "show" : ""}`}>
-      <div className="add-modal-content">
+      <div className="add-modal-content" ref={modalRef}>
         {/* Кнопка закрытия */}
         <div className="add-modal-close" onClick={handleClose}></div>
         <h3>Add User</h3>

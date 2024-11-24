@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./modal.css";
 import Instance from "../../../../api/instance/Instance";
 
 const Modal = ({ id, title, message, onDelete, onClose }) => {
   const [showModal, setShowModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const modalRef = useRef(null); // Реф для модального окна
 
   useEffect(() => {
     setShowModal(true);
   }, []);
 
-  // Закрытие модального окна
+  // Закрытие модального окна с задержкой
   const handleClose = () => {
     setShowModal(false);
     setTimeout(onClose, 300); // Закрытие с задержкой
@@ -34,9 +35,24 @@ const Modal = ({ id, title, message, onDelete, onClose }) => {
     }
   };
 
+  // Закрытие модалки при клике вне её
+  const handleClickOutside = (event) => {
+    if (modalRef.current && !modalRef.current.contains(event.target)) {
+      handleClose();
+    }
+  };
+
+  // Добавляем и удаляем обработчик кликов при монтировании и размонтировании компонента
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className={`modal-overlay ${showModal ? "show" : ""}`}>
-      <form className="modal-content">
+      <form className="modal-content" ref={modalRef}>
         {isDeleting ? (
           <div className="modal-loader"></div>
         ) : (

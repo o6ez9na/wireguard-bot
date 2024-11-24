@@ -65,6 +65,16 @@ export default function UserTable() {
             alt="plus"
           />
         </div>
+        <div className="search">
+          <input type="text" placeholder="Search..." className="search-input" />
+          <button className="search-btn">
+            <img
+              className="search-icon"
+              src={process.env.PUBLIC_URL + "/auth-icons/search.svg"}
+              alt="search"
+            ></img>
+          </button>
+        </div>
         <div className="main-icon-user" onClick={fetchData}>
           <img
             className="table-icon"
