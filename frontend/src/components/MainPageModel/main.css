@@ -160,38 +160,43 @@
 
 table {
   width: 100%;
-  border-collapse: separate; /* Разделение ячеек для работы с border-radius */
-  border-spacing: 0; /* Убирает промежутки между ячейками */
-  border: 1px solid #ddd; /* Граница вокруг всей таблицы */
-  border-radius: 10px; /* Скругление углов таблицы */
-  overflow: hidden; /* Чтобы скругление не нарушалось */
+  table-layout: fixed; /* Фиксированная ширина для ячеек */
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
   font-size: 14px;
 }
 
 th,
 td {
-  padding: 12px 40px; /* Отступы для ячеек: 12px сверху/снизу, 20px слева/справа */
-  text-align: left; /* Выравнивание текста по левому краю */
-  border-bottom: 1px solid #ddd; /* Горизонтальная граница для строк */
+  padding: 12px 20px; /* Уменьшаем padding для более плотного отображения */
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap; /* Запрещаем перенос текста */
+  overflow: hidden; /* Скрываем текст, который выходит за пределы */
+  text-overflow: ellipsis; /* Добавляем многоточие */
+  max-width: 150px; /* Ограничиваем максимальную ширину ячеек */
 }
 
 th {
-  background-color: #ddd; /* Цвет фона для заголовков */
-  color: #282528; /* Цвет текста в заголовках */
+  background-color: #ddd;
+  color: #282528;
   font-weight: 500;
 }
 
 td {
-  background-color: #f9f9f9; /* Легкий фон для ячеек */
+  background-color: #f9f9f9;
 }
 
 tbody tr:hover {
-  background-color: #e8f4f2; /* Цвет фона при наведении */
+  background-color: #e8f4f2;
   cursor: pointer;
 }
 
 tbody tr:hover td {
-  background-color: #e8f4f2; /* Цвет фона при наведении */
+  background-color: #e8f4f2;
   cursor: pointer;
 }
 
@@ -204,15 +209,15 @@ td {
 
 /* Скругление углов */
 tbody tr:first-child {
-  border-top-left-radius: 10px; /* Скругление левого верхнего угла первой строки */
-  border-top-right-radius: 10px; /* Скругление правого верхнего угла первой строки */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 tbody tr:last-child {
-  border-bottom-left-radius: 10px; /* Скругление левого нижнего угла последней строки */
-  border-bottom-right-radius: 10px; /* Скругление правого нижнего угла последней строки */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 tbody tr:not(:last-child) {
-  border-bottom: 1px solid #ddd; /* Горизонтальная линия между строками */
+  border-bottom: 1px solid #ddd;
 }

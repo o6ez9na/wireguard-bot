@@ -46,10 +46,18 @@ export default function UserTable() {
 
   const handleSwitchChange = (user, newStatus) => {
     const updatedData = data.map((row) =>
-      row.id === user.id ? { ...row, is_active: newStatus } : row
+        row.id === user.id ? { ...row, is_active: newStatus } : row
     );
     setData(updatedData);
+
+    // Также обновляем отфильтрованные данные, если они отображаются
+    setFilteredData((prevFiltered) =>
+        prevFiltered.map((row) =>
+            row.id === user.id ? { ...row, is_active: newStatus } : row
+        )
+    );
   };
+
 
   // Функция для удаления пользователя
   const handleDeleteUser = (id) => {
@@ -119,6 +127,7 @@ export default function UserTable() {
           >
             <thead>
               <tr>
+
                 <th>ID</th>
                 <th>Menu</th>
                 <th>Enabled</th>
@@ -152,7 +161,8 @@ export default function UserTable() {
                   <td>{row.name}</td>
                   <td>{row.public_key}</td>
                   <td>{row.private_key}</td>
-                  <td>{row.description}</td>
+                  <td>
+                    {row.description}</td>
                 </tr>
               ))}
             </tbody>
