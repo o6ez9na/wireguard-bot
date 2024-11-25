@@ -63,7 +63,7 @@ export default function UserTable() {
   const handleDeleteUser = (id) => {
     // Удаляем пользователя из таблицы
     const updatedData = data.filter((row) => row.id !== id);
-    setData(updatedData);
+    fetchData()
   };
 
   // Функция для обновления поиска

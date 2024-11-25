@@ -73,7 +73,7 @@ async def get_ssh_pair(session: AsyncSession, client: Client):
         session.add(client)
         await session.commit()
 
-        return {"private_key": private_key, "public_key": public_key}
+        return client
 
     except Exception as e:
         await session.rollback()
