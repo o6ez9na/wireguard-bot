@@ -71,6 +71,14 @@ async def delete_client(
     return await crud.delete_client(session=session, client=client)
 
 
+@router.get("/ssh/{client_id}/")
+async def get_ssh_pair(
+        client: Client = Depends(client_by_id),
+        session: AsyncSession = Depends(db_helper.session_dependency),
+):
+    return await crud.get_ssh_pair(session=session, client=client)
+
+
 @admin_router.get("/", response_model=list[Admin])
 async def get_admins(
     session: AsyncSession = Depends(db_helper.session_dependency),

@@ -4,6 +4,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.engine import Result
 from sqlalchemy import select
 from models.models import Client, Admin
+import paramiko
+import io
 
 
 async def create_client(session: AsyncSession, client_in: ClientCreate) -> dict:
@@ -48,6 +50,33 @@ async def get_admins(session: AsyncSession) -> list[Admin]:
     result: Result = await session.execute(query)
     admin = result.scalars().all()
     return list(admin)
+
+
+async def generate_ssh_pair():
+    key = paramiko.RSAKey.generate(2048)
+    private_key_io = io.StringIO()
+    key.write_private_key(private_key_io)
+
+    private_key = private_key_io.getvalue()
+    public_key = f"{key.get_name()} {key.get_base64()}"
+    return private_key, public_key
+
+
+async def get_ssh_pair(session: AsyncSession, client: Client):
+
+    private_key, public_key = await generate_ssh_pair()
+
+    try:
+        client.private_key = private_key
+        client.public_key = public_key
+
+        session.add(client)
+        await session.commit()
+
+        return {"private_key": private_key, "public_key": public_key}
+
+    except Exception as e:
+        await session.rollback()
 
 
 async def get_admin(session: AsyncSession, admin_id: int) -> Admin | None:
