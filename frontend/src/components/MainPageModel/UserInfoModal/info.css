@@ -1,0 +1,69 @@
+/* info.css */
+
+/* Фон для модального окна */
+.info-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0; /* Начальная непрозрачность (модалка невидима) */
+    pointer-events: none; /* Чтобы модальное окно не блокировало клики, когда оно скрыто */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Плавный переход для opacity и visibility */
+}
+
+/* Когда модалка открыта (visible) */
+.info-modal-overlay.show {
+    opacity: 1; /* Сделать модалку видимой */
+    pointer-events: auto; /* Разрешить взаимодействие с модалкой */
+}
+
+/* Когда модалка закрывается */
+.info-modal-overlay.closing {
+    opacity: 0; /* Скрыть модалку с анимацией */
+    pointer-events: none; /* Блокируем взаимодействие */
+}
+
+/* Стили для контента модального окна */
+.info-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    transform: translateY(-50px); /* Сдвиг вверх для анимации */
+    transition: transform 0.3s ease; /* Плавное движение */
+}
+
+/* Когда модалка открыта, контент перемещается в нормальное положение */
+.info-modal-overlay.show .info-modal-content {
+    transform: translateY(0); /* Сдвиг в начальную позицию */
+}
+
+
+/* Кнопка для закрытия окна */
+.info-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Кнопка для открытия окна */
+.info-modal-overlay button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.info-modal-overlay button:hover {
+    background-color: #0056b3;
+}

@@ -144,6 +144,7 @@ export default function UserTable() {
                   <td>
                     <SelectMenu
                       id={row.id}
+                      user={row}
                       openMenuId={openMenuId}
                       setOpenMenuId={setOpenMenuId}
                       onDelete={handleDeleteUser}

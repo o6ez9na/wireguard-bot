@@ -5,7 +5,7 @@ import Instance from "../../../../api/instance/Instance";
 const Modal = ({ id, title, message, onDelete, onClose }) => {
   const [showModal, setShowModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const modalRef = useRef(null); // Реф для модального окна
+  const modalRef = useRef(null);
 
   useEffect(() => {
     setShowModal(true);
