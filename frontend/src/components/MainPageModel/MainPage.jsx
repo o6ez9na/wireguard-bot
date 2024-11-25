@@ -4,12 +4,6 @@ import UserTable from "./UserTable/UserTable";
 import UsersInfo from "./UsersInfo/UsersInfo";
 
 export default function MainPage() {
-  // Открытие модального окна
-
-  // Закрытие модального окна
-
-  // Функция для обновления данных в таблице
-
   return (
     <div className="main-page-wrapper">
       <UsersInfo />

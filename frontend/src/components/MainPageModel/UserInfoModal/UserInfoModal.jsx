@@ -29,12 +29,12 @@ export default function UserInfoModal({id, onClose, user}) {
             <div className="info-modal-content">
                 <button onClick={handleClose}>X</button>
                 <h2>Информация о пользователе</h2>
-                <p>{user.name}</p>
-                <p>{user.telegram_id}</p>
-                <p>{user.public_key}</p>
-                <p>{user.private_key}</p>
-                <p>{user.config}</p>
-                <p>{user.is_active ? "Активен" : "Деактивирован"} </p>
+                <p className={"text-into-info"}>{user.name}</p>
+                <p className={"text-into-info"}>{user.telegram_id}</p>
+                <p className={"text-into-info"}>{user.public_key}</p>
+                <p className={"text-into-info"}>{user.private_key}</p>
+                <p className={"text-into-info"}>{user.config}</p>
+                <p className={"text-into-info"}>{user.is_active ? "Активен" : "Деактивирован"} </p>
             </div>
         </div>
     );

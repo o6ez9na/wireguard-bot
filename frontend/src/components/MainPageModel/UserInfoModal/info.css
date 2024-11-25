@@ -35,6 +35,10 @@
     border-radius: 8px;
     transform: translateY(-50px); /* Сдвиг вверх для анимации */
     transition: transform 0.3s ease; /* Плавное движение */
+    max-width: 400px;
+    width: auto;
+    max-height: 600px;
+    height: auto;
 }
 
 /* Когда модалка открыта, контент перемещается в нормальное положение */
@@ -66,4 +70,11 @@
 
 .info-modal-overlay button:hover {
     background-color: #0056b3;
+}
+
+.text-into-info {
+    max-width: 70ch; /* Ограничение длины строки */
+    overflow: hidden; /* Прячет избыточный текст */
+    text-overflow: ellipsis; /* Добавляет многоточие в конце строки */
+    white-space: nowrap; /* Предотвращает перенос текста на следующую строку */
 }
