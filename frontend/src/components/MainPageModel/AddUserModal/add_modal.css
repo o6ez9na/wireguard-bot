@@ -122,12 +122,16 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   background-image: url("../../../../public/auth-icons/close.svg");
   background-size: contain; /* Масштабируем иконку по размеру контейнера */
   background-repeat: no-repeat;
   cursor: pointer;
+  transition: .3s ease;
+}
+.add-modal-close:hover{
+  transform: scale(1.2);
 }
 
 .add-modal-button-submit {
