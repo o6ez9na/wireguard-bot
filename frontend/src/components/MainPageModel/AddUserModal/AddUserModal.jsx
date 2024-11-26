@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./add_modal.css";
 import Instance from "../../../api/instance/Instance";
-
+import GenerateCertsForUser from "../GenerateCertsForUser/GenerateCertsForUser";
 // Модальное окно
 export const AddUserModal = ({ onClose, onUserAdded }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -97,14 +97,20 @@ export const AddUserModal = ({ onClose, onUserAdded }) => {
           <input
             type="text"
             placeholder="Public Key"
+            value={pubkey}
             className="modal-input-styler public"
             onChange={handleChangePubkey}
           />
           <input
             type="text"
             placeholder="Private Key"
+            value={privateKey}
             className="modal-input-styler private"
             onChange={handleChangePrivateKey}
+          />
+          <GenerateCertsForUser
+          setPub={setPubkey}
+          setPrivate={setPrivateKey}
           />
           <input
             type="text"
@@ -114,7 +120,7 @@ export const AddUserModal = ({ onClose, onUserAdded }) => {
           />
         </div>
         {/* Кнопка для отправки данных */}
-        <div className="add-modal-button-submit" onClick={handleSubmit}>
+        <div className="add-modal-overlay-button add-modal-button-submit" onClick={handleSubmit}>
           Добавить
         </div>
       </div>

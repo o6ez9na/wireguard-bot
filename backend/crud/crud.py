@@ -7,7 +7,6 @@ from models.models import Client, Admin
 import paramiko
 import io
 
-
 async def create_client(session: AsyncSession, client_in: ClientCreate) -> dict:
     client = Client(**client_in.model_dump())
     session.add(client)
@@ -62,21 +61,9 @@ async def generate_ssh_pair():
     return private_key, public_key
 
 
-async def get_ssh_pair(session: AsyncSession, client: Client):
-
+async def get_ssh_pair():
     private_key, public_key = await generate_ssh_pair()
-
-    try:
-        client.private_key = private_key
-        client.public_key = public_key
-
-        session.add(client)
-        await session.commit()
-
-        return client
-
-    except Exception as e:
-        await session.rollback()
+    return [private_key, public_key]
 
 
 async def get_admin(session: AsyncSession, admin_id: int) -> Admin | None:

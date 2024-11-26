@@ -63,7 +63,7 @@
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.2);
 }
 
-.main-icon-user img:hover {
+.main-icon-user img:active {
   animation: rotate360 0.6s ease-out; /* Добавляем анимацию вращения */
 }
 .search {
