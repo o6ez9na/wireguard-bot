@@ -11,10 +11,9 @@ const Modal = ({ id, title, message, onDelete, onClose }) => {
     setShowModal(true);
   }, []);
 
-  // Закрытие модального окна с задержкой
   const handleClose = () => {
     setShowModal(false);
-    setTimeout(onClose, 300); // Закрытие с задержкой
+    setTimeout(onClose, 300);
   };
 
   const handleDelete = async () => {
@@ -23,7 +22,7 @@ const Modal = ({ id, title, message, onDelete, onClose }) => {
     try {
       const response = await Instance.delete(`/client/${id}/`);
       if (response.status === 204) {
-        onDelete(id); // Обновляем данные родительского компонента после успешного удаления
+        onDelete(id);
         handleClose();
       } else {
         console.error("Failed to delete item");
@@ -31,18 +30,16 @@ const Modal = ({ id, title, message, onDelete, onClose }) => {
     } catch (error) {
       console.error("Error during deletion:", error);
     } finally {
-      setIsDeleting(false); // Важно, чтобы спиннер скрывался, даже если произошла ошибка
+      setIsDeleting(false);
     }
   };
 
-  // Закрытие модалки при клике вне её
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       handleClose();
     }
   };
 
-  // Добавляем и удаляем обработчик кликов при монтировании и размонтировании компонента
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -64,7 +61,7 @@ const Modal = ({ id, title, message, onDelete, onClose }) => {
                 onClick={handleDelete}
                 type="button"
                 className="delete-button"
-                disabled={isDeleting} // Блокируем кнопку во время удаления
+                disabled={isDeleting}
               >
                 Delete
               </button>

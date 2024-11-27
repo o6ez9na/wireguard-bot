@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./add_modal.css";
 import Instance from "../../../api/instance/Instance";
 import GenerateCertsForUser from "../GenerateCertsForUser/GenerateCertsForUser";
-// Модальное окно
+
 export const AddUserModal = ({ onClose, onUserAdded }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [username, setUsername] = useState("");
@@ -11,7 +11,7 @@ export const AddUserModal = ({ onClose, onUserAdded }) => {
   const [pubkey, setPubkey] = useState("");
   const [privateKey, setPrivateKey] = useState("");
   const [presharedKey, setPresharedKey] = useState("");
-  const modalRef = useRef(null); // Реф для модального окна
+  const modalRef = useRef(null);
   const config = "пусто"
   const handleChangeTg_id = (e) => setTg_id(e.target.value);
   const handleChangePrivateKey = (e) => setPrivateKey(e.target.value);
@@ -19,10 +19,9 @@ export const AddUserModal = ({ onClose, onUserAdded }) => {
   const handleChangeDescription = (e) => setDescription(e.target.value);
   const handleChangeUsername = (e) => setUsername(e.target.value);
 
-  // Функция отправки данных
   const handleSubmit = async () => {
     try {
-      const response = await Instance.post("/client/create", {
+      await Instance.post("/client/create", {
         name: username,
         description: description,
         telegram_id: tg_id,
@@ -32,8 +31,6 @@ export const AddUserModal = ({ onClose, onUserAdded }) => {
         config: config,
         is_active: true,
       });
-      console.log("User added successfully", response.data);
-      // После успешного добавления вызываем onUserAdded для обновления таблицы
       onUserAdded();
       handleClose();
     } catch (e) {
@@ -41,27 +38,24 @@ export const AddUserModal = ({ onClose, onUserAdded }) => {
     }
   };
 
-  // Плавное появление и исчезновение
   useEffect(() => {
     setIsVisible(true);
-    return () => setIsVisible(false); // Плавное исчезновение
+    return () => setIsVisible(false);
   }, []);
 
   const handleClose = () => {
-    setIsVisible(false); // Запускаем процесс исчезновения
+    setIsVisible(false);
     setTimeout(() => {
-      onClose(); // Закрываем окно после завершения анимации
-    }, 300); // 300 ms – время, соответствующее продолжительности анимации
+      onClose();
+    }, 300);
   };
 
-  // Закрытие модального окна при клике вне его
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       handleClose();
     }
   };
 
-  // Добавляем и удаляем обработчик кликов при монтировании и размонтировании компонента
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -72,7 +66,6 @@ export const AddUserModal = ({ onClose, onUserAdded }) => {
   return (
     <div className={`add-modal-overlay ${isVisible ? "show" : ""}`}>
       <div className="add-modal-content" ref={modalRef}>
-        {/* Кнопка закрытия */}
         <div className="add-modal-close" onClick={handleClose}></div>
         <h3>Add User</h3>
         <div className="modal-input-controller">
@@ -114,7 +107,6 @@ export const AddUserModal = ({ onClose, onUserAdded }) => {
           setPresharedKey={setPresharedKey}
           />
         </div>
-        {/* Кнопка для отправки данных */}
         <div className="add-modal-overlay-button add-modal-button-submit" onClick={handleSubmit}>
           Добавить
         </div>

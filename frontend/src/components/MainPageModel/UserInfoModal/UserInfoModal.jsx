@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { QRCodeCanvas } from "qrcode.react"; // Импортируем QRCodeCanvas
+import { QRCodeCanvas } from "qrcode.react";
 import "./info.css";
 
 export default function UserInfoModal({ id, onClose, user }) {
-    const [isVisible, setIsVisible] = useState(false); // Управляем видимостью модального окна
-    const [isClosing, setIsClosing] = useState(false); // Состояние для управления процессом закрытия
-    const [showQRCode, setShowQRCode] = useState(false); // Состояние для отображения QR-кода
+    const [isVisible, setIsVisible] = useState(false);
+    const [isClosing, setIsClosing] = useState(false);
+    const [showQRCode, setShowQRCode] = useState(false);
 
     useEffect(() => {
         setIsVisible(true);
@@ -57,15 +57,15 @@ export default function UserInfoModal({ id, onClose, user }) {
                 <div className={"info-user-status"}>
                     <div className={"max-width-config-box"}>
                         <h3>Public Key</h3>
-                        <pre className={"config-box text-into-info"}>{user.public_key}</pre>
+                        <pre className={"config-box text-into-info max-pt-height"}>{user.public_key}</pre>
                     </div>
                     <div className={"max-width-config-box"}>
                         <h3>Private Key</h3>
-                        <pre className={"config-box text-into-info"}>{user.private_key}</pre>
+                        <pre className={"config-box text-into-info max-pt-height"}>{user.private_key}</pre>
                     </div>
                     <div className={"max-width-config-box"}>
                         <h3>Preshared Key</h3>
-                        <pre className={"config-box text-into-info"}>{user.preshared_key}</pre>
+                        <pre className={"config-box text-into-info max-pt-height"}>{user.preshared_key}</pre>
                     </div>
                 </div>
                 <div style={{ position: "relative" }}>
@@ -99,7 +99,7 @@ export default function UserInfoModal({ id, onClose, user }) {
                         </div>
                         {showQRCode ? (
                             <div className="qr-container">
-                                <QRCodeCanvas value={user.config} size={170} />
+                                <QRCodeCanvas value={user.config} size={171} />
                             </div>
                         ) : (
                             user.config

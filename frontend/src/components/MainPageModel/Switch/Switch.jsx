@@ -1,6 +1,6 @@
 import React from "react";
 import "./switch.css";
-import Instance from "../../../api/instance/Instance"; // Импорт вашего API клиента
+import Instance from "../../../api/instance/Instance";
 
 export default function Switch({ user, checked, onChange }) {
   const handleToggle = async () => {
@@ -27,7 +27,7 @@ export default function Switch({ user, checked, onChange }) {
       <div className="switch-container">
         <input
           type="checkbox"
-          id={user.id} // Уникальный id для каждого переключателя
+          id={user.id}
           checked={checked}
           onChange={handleToggle}
         />

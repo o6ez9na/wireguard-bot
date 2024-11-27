@@ -15,7 +15,7 @@ export default function SelectMenu({
     const [isModalOpen, setIsModalOpen] = useState(false);
     const menuRef = useRef(null);
     const buttonRef = useRef(null);
-    const modalRef = useRef(null); // Реф для модального окна
+    const modalRef = useRef(null);
     const [isInfoOpen, setIsInfoOpen] = useState(false);
     const isOpen = openMenuId === id;
 
@@ -51,12 +51,10 @@ export default function SelectMenu({
     };
 
     const handleClickOutside = (event) => {
-        // Закрываем меню, если кликнули вне его
         if (menuRef.current && !menuRef.current.contains(event.target)) {
             setOpenMenuId(null);
         }
 
-        // Закрываем модалку, если кликнули вне ее
         if (modalRef.current && !modalRef.current.contains(event.target)) {
             closeModal();
         }
@@ -124,12 +122,11 @@ export default function SelectMenu({
                             </li>
                         </ul>
                     </div>,
-                    document.body // Рендерим выпадающее меню в body
+                    document.body
                 )}
             {
                 isInfoOpen && createPortal(
                     <UserInfoModal
-                        // ref={modalRef}
                         id={id}
                         user={user}
                         onClose={closeModal}
@@ -141,14 +138,14 @@ export default function SelectMenu({
             {isModalOpen &&
                 createPortal(
                     <Modal
-                        ref={modalRef} // Передаем ref модальному окну
+                        ref={modalRef}
                         id={id}
                         title={"Are you sure?"}
                         message={"This user will be deleted once and for all"}
                         onClose={closeModal}
                         onDelete={handleDelete}
                     />,
-                    document.body // Рендерим модалку в body
+                    document.body
                 )}
         </div>
     );

@@ -33,7 +33,7 @@ export default function UserTable() {
   }, [shouldUpdate]);
 
   const updateTable = () => {
-    setShouldUpdateTable((prev) => !prev); // Изменяем состояние для триггера перерисовки
+    setShouldUpdateTable((prev) => !prev);
   };
 
   const closeModal = () => {
@@ -50,7 +50,6 @@ export default function UserTable() {
     );
     setData(updatedData);
 
-    // Также обновляем отфильтрованные данные, если они отображаются
     setFilteredData((prevFiltered) =>
         prevFiltered.map((row) =>
             row.id === user.id ? { ...row, is_active: newStatus } : row
@@ -59,26 +58,24 @@ export default function UserTable() {
   };
 
 
-  // Функция для удаления пользователя
   const handleDeleteUser = (id) => {
-    // Удаляем пользователя из таблицы
     const updatedData = data.filter((row) => row.id !== id);
-    fetchData()
+    setData(updatedData); // Обновляем локальные данные
+    setFilteredData((prevFiltered) => prevFiltered.filter((row) => row.id !== id)); // Обновляем отфильтрованные данные
   };
 
-  // Функция для обновления поиска
+
   const handleSearchChange = (event) => {
     const query = event.target.value;
     setSearchQuery(query);
 
-    // Фильтрация данных по имени пользователя
     if (query) {
       const filtered = data.filter((user) =>
         user.name.toLowerCase().includes(query.toLowerCase())
       );
       setFilteredData(filtered);
     } else {
-      setFilteredData(data); // Если поисковый запрос пустой, показываем все данные
+      setFilteredData(data);
     }
   };
 
@@ -97,8 +94,8 @@ export default function UserTable() {
             type="text"
             placeholder="Search by name..."
             className="search-input"
-            value={searchQuery} // Управляемое состояние для поиска
-            onChange={handleSearchChange} // Обработчик изменения поля поиска
+            value={searchQuery}
+            onChange={handleSearchChange}
           />
           <button className="search-btn">
             <img

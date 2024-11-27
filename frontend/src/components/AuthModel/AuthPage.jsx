@@ -20,17 +20,14 @@ export default function AuthPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Запускаем анимацию исчезновения формы
     setIsFadingOut(true);
 
-    // Ждем окончания анимации
     setTimeout(() => {
-      setIsLoading(true); // Отображаем спиннер после исчезновения формы
-      setIsFadingOut(false); // Сбрасываем состояние анимации
+      setIsLoading(true);
+      setIsFadingOut(false);
 
-      // Выполняем запрос
       submitLogin();
-    }, 500); // Время должно совпадать с CSS анимацией
+    }, 500);
   };
 
   const submitLogin = async () => {
@@ -48,7 +45,6 @@ export default function AuthPage() {
       setErrorMessage(err.message);
       setIsErrorVisible(true);
 
-      // Показываем ошибку и возвращаем форму
       setIsLoading(false);
 
       setTimeout(() => {
