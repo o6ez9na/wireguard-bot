@@ -15,6 +15,7 @@ class ClientBase(BaseModel):
     telegram_id: str
     public_key: str
     private_key: str
+    preshared_key: str
     config: str
     description: str
     is_active: bool = False

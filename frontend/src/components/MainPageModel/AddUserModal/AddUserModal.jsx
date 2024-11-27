@@ -10,11 +10,10 @@ export const AddUserModal = ({ onClose, onUserAdded }) => {
   const [tg_id, setTg_id] = useState("");
   const [pubkey, setPubkey] = useState("");
   const [privateKey, setPrivateKey] = useState("");
-  const [config, setConfig] = useState("");
+  const [presharedKey, setPresharedKey] = useState("");
   const modalRef = useRef(null); // Реф для модального окна
-
+  const config = "пусто"
   const handleChangeTg_id = (e) => setTg_id(e.target.value);
-  const handleChangeConfig = (e) => setConfig(e.target.value);
   const handleChangePrivateKey = (e) => setPrivateKey(e.target.value);
   const handleChangePubkey = (e) => setPubkey(e.target.value);
   const handleChangeDescription = (e) => setDescription(e.target.value);
@@ -29,6 +28,7 @@ export const AddUserModal = ({ onClose, onUserAdded }) => {
         telegram_id: tg_id,
         public_key: pubkey,
         private_key: privateKey,
+        preshared_key: presharedKey,
         config: config,
         is_active: true,
       });
@@ -111,12 +111,7 @@ export const AddUserModal = ({ onClose, onUserAdded }) => {
           <GenerateCertsForUser
           setPub={setPubkey}
           setPrivate={setPrivateKey}
-          />
-          <input
-            type="text"
-            placeholder="Config"
-            className="modal-input-styler config"
-            onChange={handleChangeConfig}
+          setPresharedKey={setPresharedKey}
           />
         </div>
         {/* Кнопка для отправки данных */}

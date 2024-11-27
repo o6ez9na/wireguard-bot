@@ -1,6 +1,6 @@
 FROM python:3.12
 ENV PIP_ROOT_USER_ACTION=ignore
-RUN mkdir usr/src/code && apt update && apt install libldap2-dev libsasl2-dev -y
+RUN mkdir usr/src/code && apt update && apt install libldap2-dev libsasl2-dev wireguard-tools -y
 
 WORKDIR /usr/src/code
 COPY . .

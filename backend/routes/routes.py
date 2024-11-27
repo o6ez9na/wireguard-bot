@@ -10,6 +10,7 @@ router = APIRouter(prefix='/api/v1/client', tags=["Clients"])
 admin_router = APIRouter(prefix='/api/v1/admin', tags=["Admin"])
 admin_router.include_router(login_router)
 
+server_router = APIRouter(prefix='/api/v1/server', tags=["Server"])
 
 @router.get("/", response_model=list[Client])
 async def get_clients(
@@ -17,12 +18,13 @@ async def get_clients(
 ):
     return await crud.get_clients(session=session)
 
-@router.get("/ssh/")
-async def get_ssh_pair():
-    private_key, public_key = await crud.generate_ssh_pair()
+@server_router.get("/keys/")
+async def generate_keys():
+    private_key, public_key, preshared_key = await crud.generate_keys()
     return {
         "private_key": private_key,
         "public_key": public_key,
+        "preshared_key": preshared_key,
     }
 
 @router.get("/{client_id}/", response_model=Client)

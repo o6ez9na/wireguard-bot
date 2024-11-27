@@ -90,7 +90,7 @@
   transition: 0.5s ease;
   border: 1px solid rgba(0, 0, 0, 0.3);
   outline: none;
-  background-color: rgb(240, 248, 255, 0.3);
+  background-color: #f4f4f4;
   color: gray;
   font-size: 18px;
   background-position: 10px center;
@@ -142,7 +142,8 @@
   border-radius: 10px;
   width: 150px;
   height: 20px;
-  background-color: rgb(240, 248, 255, 0.8);
+  background-color: #f4f4f4;
+
   border: 1px solid rgba(0, 0, 0, 0.3);
   color: gray;
   transition: 0.3s ease;

@@ -1,15 +1,16 @@
 import React from 'react'
 import './certs.css'
 import Instance from "../../../api/instance/Instance";
-export default function GenerateCertsForUser({setPub, setPrivate}) {
+export default function GenerateCertsForUser({setPub, setPrivate, setPresharedKey}) {
 
     const genkeys = async () => {
         try
         {
-            const response = await Instance.get("/client/ssh", {});
+            const response = await Instance.get("/server/keys", {});
             console.log("Generate CertsForUser Response:", response);
             setPrivate(response.data.private_key)
             setPub(response.data.public_key)
+            setPresharedKey(response.data.preshared_key)
         }
         catch (e)
         {

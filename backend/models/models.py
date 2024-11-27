@@ -11,6 +11,8 @@ class ClientBase(Base):
     telegram_id: Mapped[str]
     public_key: Mapped[str]
     private_key: Mapped[str]
+    preshared_key: Mapped[str]
+
     config: Mapped[str]
     is_active: Mapped[bool]
 

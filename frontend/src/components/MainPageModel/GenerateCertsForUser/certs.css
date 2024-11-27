@@ -6,7 +6,8 @@
     align-items: center;
     border-radius: 30px;
     border: 1px solid rgba(0, 0, 0, 0.3);
-    background-color: rgb(240, 248, 255, 0.8);
+    background-color: #f4f4f4;
+
     transition: .3s ease-in-out;
     color: gray;
 }

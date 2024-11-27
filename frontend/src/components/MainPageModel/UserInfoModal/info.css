@@ -35,9 +35,9 @@
     border-radius: 8px;
     transform: translateY(-50px); /* Сдвиг вверх для анимации */
     transition: transform 0.3s ease; /* Плавное движение */
-    max-width: 400px;
+    max-width: 600px;
     width: auto;
-    max-height: 600px;
+    max-height: 720px;
     height: auto;
 }
 
@@ -58,23 +58,90 @@
     cursor: pointer;
 }
 
-/* Кнопка для открытия окна */
-.info-modal-overlay button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.info-modal-overlay button:hover {
-    background-color: #0056b3;
-}
-
 .text-into-info {
     max-width: 70ch; /* Ограничение длины строки */
     overflow: hidden; /* Прячет избыточный текст */
     text-overflow: ellipsis; /* Добавляет многоточие в конце строки */
     white-space: nowrap; /* Предотвращает перенос текста на следующую строку */
+}
+
+.config-box {
+    background-color: #f4f4f4; /* Светло-серый фон для выделения */
+    padding: 3px;
+    max-height: 176.5px;
+    border-radius: 5px;
+    font-family: monospace; /* Шрифт с фиксированной шириной для удобства чтения */
+    word-break: break-word; /* Автоматический перенос длинных слов */
+    white-space: pre-wrap; /* Перенос строк, если текст слишком длинный */
+    overflow-x: auto; /* Горизонтальная прокрутка для длинных строк */
+}
+
+.info-modal-content h3{
+    margin:3px;
+}
+
+.info-user-status{
+    justify-content: space-between;
+    display: flex;
+}
+
+.max-width-config-box{
+    width: 33%;
+}
+
+.copy {
+    position: absolute;
+    top: 45px;
+    right: 8px;
+    padding: 0;
+    font-size: 12px;
+    background-color: #f4f4f4;
+    color: white; /* Белый текст */
+    border: none; /* Убираем границы */
+    border-radius: 3px; /* Скругляем углы */
+    cursor: pointer; /* Указатель при наведении */
+    transition: .3s ease;
+}
+
+.copy-icon{
+    width: 14px;
+}
+
+.copy:active {
+    transform: scale(0.9);
+}
+
+.qr {
+    position: absolute;
+    top: 45px;
+    right: 30px;
+    /*margin: 10px;*/
+    padding: 0;
+    font-size: 12px;
+    background-color: #f4f4f4;
+    color: white; /* Белый текст */
+    border: none; /* Убираем границы */
+    border-radius: 3px; /* Скругляем углы */
+    cursor: pointer; /* Указатель при наведении */
+    transition: .3s ease;
+}
+
+.qr:active{
+    transform: scale(0.9);
+}
+.qr-icon{
+    width: 14px;
+}
+
+.buttons-config-box{
+    display: flex;
+    justify-content: center;
+}
+
+.qr-container{
+width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
